@@ -1,0 +1,47 @@
+﻿@model IEnumerable<uCMDB.API.Models.Service>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Service_Protocol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service_Port)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Service_URL)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service_Protocol)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service_Port)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service_URL)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Service_Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Service_Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Service_Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

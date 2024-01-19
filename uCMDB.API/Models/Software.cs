@@ -10,8 +10,10 @@ namespace uCMDB.API.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
         public string Developer { get; set; }
 
+        [Required]
         public string LicenceType { get; set; }
 
         public string InstallExecPath { get; set; }
