@@ -5,10 +5,15 @@ namespace uCMDB.API.Models
     public class Service_Host
     {
         [Key]
+        [Display(Name = "Host ID")]
         public int Host_ID { get; set; }
+
         [Required]
+        [Display(Name = "Hostname")]
         public string Host_Name { get; set; }
+
         [Required]
+        [Display(Name = "IP Address")]
         public string Host_IP { get; set; }
 
         public ICollection<Service> Services { get; } = new List<Service>();
