@@ -1,0 +1,38 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (SignInManager.IsSignedIn(User))
+{ 
+    <h1>Home - Configuration Items</h1>
+
+    <div class="text-center">
+        <p>Here you can find entries for all Configuration Item entries on this database.</p>
+        <br />
+        <br />
+        <a class="btn btn-primary" href="/Software/Index">Software Collection</a>
+        <br />
+        <br />
+        <a class="btn btn-primary" href="/Users/Index">Users</a>
+        <br />
+        <br />
+        <a class="btn btn-primary" href="/Nodes/Index">Nodes</a>
+        <br />
+        <br />
+        <a class="btn btn-primary" href="/Hosts/Index">Hosts</a>
+        <br />
+        <br />
+        <a class="btn btn-primary" href="/Services/Index">Services</a>
+    </div>
+}
+else
+{
+    <h1>Home</h1>
+    <div class ="text-center">
+        <p>You are currently not logged in. To use uCMDB, you must <a asp-area="Identity" asp-page="/Account/Login">login.</a></p>
+    </div>
+}
