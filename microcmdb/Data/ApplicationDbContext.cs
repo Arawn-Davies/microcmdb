@@ -17,7 +17,7 @@ namespace microcmdb.Data
             Database.EnsureCreated();
         }
 
-        protected override void OnModelCreating(ModelBuilder builder) : base 
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             // This needs to be here, otherwise the database will not be created
             base.OnModelCreating(builder);
