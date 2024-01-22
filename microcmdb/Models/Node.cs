@@ -6,7 +6,7 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "Node ID")]
-        public int Id { get; set; } 
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Description")]
@@ -28,5 +28,10 @@ namespace microcmdb.Models
         [Display(Name = "Operating System")]
         public string OS_Version { get; set; } = string.Empty;
 
+        [Required]
+        [Display(Name = "IP Address")]
+        public string IPaddr { get; set; } = string.Empty;
+
+        public Host? Host { get; set; }
     }
 }

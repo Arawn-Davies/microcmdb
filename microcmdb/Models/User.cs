@@ -6,15 +6,16 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "User ID")]
-        public int User_ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [Display(Name = "User Name")]
-        public string User_Name { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "User Password")]
-        public string User_passwd { get; set;} = string.Empty;
+        public string Passwd { get; set;} = string.Empty;
+
+        public ICollection<Host> Hosts { get; } = new List<Host>();
 
     }
 }

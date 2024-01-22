@@ -6,18 +6,23 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "Service ID")]
-        public int Service_Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Protocol")]
-        public string Service_Protocol { get; set; } = string.Empty;
+        [Display(Name = "Service Protocol")]
+        public string Protocol { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "URL")]
-        public string Service_URL { get; set; } = string.Empty;
+        [Display(Name = "Location")]
+        public string URL { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "Port")]
-        public int Service_Port { get; set; }
+        [Display(Name = "Port Number")]
+        public int PortNum{ get; set; }
+
+        [Required]
+        public Host Host { get; set; } = new Host();
+        [Required]
+        public int HostId { get; set; }
     }
 }

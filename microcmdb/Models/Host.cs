@@ -6,19 +6,18 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "Host ID")]
-        public int Host_ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "Hostname")]
-        public string Host_Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Required]
-        [Display(Name = "IP Address")]
-        public string Host_IP { get; set; }
+        public Node Node { get; set; } = new Node();
+        [Required]
+        public int NodeId { get; set; }
 
-        public ICollection<Service> Services { get; } = new List<Service>();
-        public ICollection<Software> Software { get; } = new List<Software>();
-        public ICollection<Node> NetworkNodes { get; } = new List<Node>();
-        public ICollection<User> Users { get; } = new List<User>();
-    }
+        public IList<User> Users { get; set; } = new List<User>();
+        public IList<Service> Services { get; } = new List<Service>();      
+        public IList<Software> Software { get; } = new List<Software>();    }
 }
