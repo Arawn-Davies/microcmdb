@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using microcmdb.Models;
+using Microsoft.Extensions.Hosting;
 
 namespace microcmdb.Data
 {
@@ -8,7 +9,7 @@ namespace microcmdb.Data
     {
         public DbSet<User> Accounts { get; set; }
         public DbSet<Models.Host> Hosts { get; set; }
-        public DbSet<Node> NetworkNodes { get; set; }
+        public DbSet<Node> Nodes { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Software> Software { get; set; }  
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -19,7 +20,6 @@ namespace microcmdb.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // This needs to be here, otherwise the database will not be created
             base.OnModelCreating(builder);
 
             // Build a one-to-many relationship between Hosts and Services, so that a host can have multiple services
@@ -58,6 +58,7 @@ namespace microcmdb.Data
                 .HasForeignKey<Models.Host>(n => n.NodeId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            // Build a many-to-many relationship between Hosts and Users, so that a host can have multiple users, and a User can have multiple hosts
             builder.Entity<Models.Host>()
                 .HasMany(e => e.Users)
                 .WithMany(e => e.Hosts);
@@ -65,6 +66,7 @@ namespace microcmdb.Data
             builder.Entity<User>()
                 .HasMany(e => e.Hosts)
                 .WithMany(e => e.Users);
+
         }
     }
 }
