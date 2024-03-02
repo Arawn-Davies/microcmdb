@@ -7,7 +7,7 @@ namespace microcmdb.Models
         // A unique identifier for the node
         [Key]
         [Display(Name = "Node ID")]
-        public int Id { get; set; }
+        public int NodeID { get; set; }
         
         // A required field for the name/description of the node
         [Required]
@@ -37,13 +37,17 @@ namespace microcmdb.Models
         public string? IPaddr { get; set; }
 
         // A required field for which ConfigItem the node is associated with
-        [Required]
-        [Display(Name = "Config Item")]
-        public ConfigItem ConfigItem { get; set; } = new ConfigItem();
-        // A required field for the ConfigItemId
-        public int ConfigItemId { get; set; }
-        
+        [Display(Name = "Configuration Item")]
+        public ConfigItem ConfigItem { get; set; }
+        // A required field for the ConfigItemID
+        public int ConfigItemID { get; set; }
 
+        public Host? Host { get; set; }
+        public int? HostID { get; set; }
 
+        [Display(Name = "Installed Software")]
+        public ICollection<NodeSoftwareMapping> InstalledSoftware { get; set; }
+
+        public ICollection<NodeUserMapping>? Users { get; set; }
     }
 }

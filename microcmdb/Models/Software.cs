@@ -7,11 +7,11 @@ namespace microcmdb.Models
         // A unique identifier for the software
         [Key]
         [Display(Name = "Software ID")]
-        public int Id { get; set; }
+        public int SoftwareID { get; set; }
 
-        // A required field for the name of the software
+        // A required field for the title of the software
         [Required]
-        [Display(Name = "Software Name")]
+        [Display(Name = "Software Title")]
         public string Name { get; set; } = string.Empty;
 
         // A required field for the specific version of the software that is installed.
@@ -20,19 +20,13 @@ namespace microcmdb.Models
         public string Version { get; set; } = string.Empty;
 
         // An optional field for the developer or publisher of the software
-        [Required]
-        [Display(Name = "Developer/Publisher")]
+        [Display(Name = "Developer")]
         public string? Developer { get; set; }
 
         // An optional field for the type of license
         [Display(Name = "License Type")]
         public string? LicenseType { get; set; }
 
-        // An optional field for which Node the software is installed on
-        [Display(Name = "Node")]
-        public Node? Node { get; set; }
-        // An optional field for the NodeId
-        public int? NodeId { get; set; }
-
+        public NodeSoftwareMapping? NodeSoftwareMapping { get; set; }
     }
 }

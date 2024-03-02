@@ -8,7 +8,7 @@ namespace microcmdb.Models
         /// A unique identifier for the ConfigItem
         /// </summary>
         [Key]
-        public int ItemId { get; set; }
+        public int ConfigItemID { get; set; }
 
         /// <summary>
         /// A required field for the name of the ConfigItem
@@ -39,6 +39,7 @@ namespace microcmdb.Models
         [Display(Name = "Deployment location")]
         public string DeployLoc{ get; set; } = string.Empty;
 
+        public CINodeMapping? CINodeMapping { get; set; }
 
     }
 }

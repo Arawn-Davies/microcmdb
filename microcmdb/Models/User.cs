@@ -6,7 +6,7 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "User ID")]
-        public int UserId { get; set; }
+        public int UserID { get; set; }
 
         [Required]
         [Display(Name = "User Name")]
@@ -20,6 +20,8 @@ namespace microcmdb.Models
 
         [Display(Name = "Last Name")]
         public string? Lastname { get; set; }
+
+        public ICollection<NodeUserMapping> Nodes { get; set; }
 
     }
 }

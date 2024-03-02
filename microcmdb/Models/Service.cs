@@ -6,7 +6,7 @@ namespace microcmdb.Models
     {
         [Key]
         [Display(Name = "Service ID")]
-        public int Id { get; set; }
+        public int ServiceID { get; set; }
 
         [Required]
         [Display(Name = "Service Protocol")]
@@ -20,9 +20,7 @@ namespace microcmdb.Models
         [Display(Name = "Port Number")]
         public int PortNum{ get; set; }
 
-        [Required]
-        public Host Host { get; set; } = new Host();
-        [Required]
-        public int HostId { get; set; }
+        public Host? Host { get; set; }
+        public int? HostID { get; set; }
     }
 }
