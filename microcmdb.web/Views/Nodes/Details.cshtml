@@ -1,0 +1,61 @@
+﻿@model microcmdb.Web.Models.Node
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Node</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.OS_Version)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.OS_Version)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CPU_Arch)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CPU_Arch)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RAM)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RAM)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Storage)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Storage)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IPaddr)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IPaddr)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CINodeMapping.ConfigItem.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CINodeMapping.ConfigItem.ConfigItemID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.NodeID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
