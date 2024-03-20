@@ -8,9 +8,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 { 
-    <h1>Home - Configuration Items</h1>
+    <h1 class="text-light">Home - Configuration Items</h1>
 
-    <div class="text-center">
+    <div class="text-center text-light">
         <p>Here you can find entries for all Configuration Item entries on this database.</p>
         <br />
         <br />
@@ -35,7 +35,7 @@
 else
 {
     <h1>Home</h1>
-    <div class ="text-center">
+    <div class ="text-center text-light">
         <p>You are currently not logged in. To use uCMDB, you must <a asp-area="Identity" asp-page="/Account/Login">login.</a></p>
     </div>
 }
