@@ -91,7 +91,7 @@ namespace microcmdb.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HostID,Name,NodeId")] Host host)
+        public async Task<IActionResult> Edit(int id, [Bind("HostID,Name,NodeId")] Models.Host host)
         {
             if (id != host.HostID)
             {
