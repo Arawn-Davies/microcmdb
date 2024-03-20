@@ -40,7 +40,7 @@ namespace microcmdb.Web.Models
         [Display(Name = "Deployment location")]
         public string DeployLoc{ get; set; } = string.Empty;
 
-        public CINodeMapping? CINodeMapping { get; set; }
+        public Node? Node { get; set; }
 
     }
 }

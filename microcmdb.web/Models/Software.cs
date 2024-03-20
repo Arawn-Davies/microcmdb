@@ -27,6 +27,7 @@ namespace microcmdb.Web.Models
         [Display(Name = "License Type")]
         public string? LicenseType { get; set; }
 
-        public ICollection<SoftwareInstallation> InstalledOn { get; set; } = new List<SoftwareInstallation>();
+        [Display(Name = "Installed On")]
+        public ICollection<SoftwareInstallation> Installations { get; set; } = new List<SoftwareInstallation>();
     }
 }

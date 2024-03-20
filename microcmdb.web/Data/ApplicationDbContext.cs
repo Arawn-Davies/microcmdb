@@ -4,6 +4,7 @@ using microcmdb.Web.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Reflection.Emit;
+using Newtonsoft.Json.Serialization;
 
 namespace microcmdb.Web.Data
 {
@@ -21,45 +22,36 @@ namespace microcmdb.Web.Data
         public DbSet<NetworkUserMapping> UserMappings { get; set; }
         public DbSet<SoftwareInstallation> SoftwareInstallations { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-               
-        }
-
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {   }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            #region Define primary keys
+
             modelBuilder.Entity<ConfigItem>()
                 .HasKey(c => c.ConfigItemID);
 
+            modelBuilder.Entity<Node>()
+                .HasKey(n => n.NodeID);
+
+            modelBuilder.Entity<Models.Host>()
+                .HasKey(h => h.HostID);
+
+            modelBuilder.Entity<Service>()
+                .HasKey(svc => svc.ServiceID);
+
+            modelBuilder.Entity<Software>()
+                .HasKey(sw => sw.SoftwareID);
+
+            modelBuilder.Entity<NetworkUser>()
+                .HasKey(nu => nu.NetworkUserID);
 
             modelBuilder.Entity<CINodeMapping>()
-                .HasKey(c => c.CINodeMappingID);
-
-            modelBuilder.Entity<CINodeMapping>()
-                .HasOne(c => c.ConfigItem)
-                .WithOne(ci => ci.CINodeMapping)
-                .HasForeignKey<CINodeMapping>(c => c.ConfigItemID);
-
-            modelBuilder.Entity<CINodeMapping>()
-                .HasOne(c => c.Node)
-                .WithOne(n => n.CINodeMapping)
-                .HasForeignKey<CINodeMapping>(c => c.NodeID);
+                .HasKey(c => new { c.ConfigItemID, c.NodeID });
 
             modelBuilder.Entity<NodeHostMapping>()
-                .HasKey(nh => nh.NodeHostMappingID);
-
-            modelBuilder.Entity<NodeHostMapping>()
-                .HasOne(nh => nh.Node)
-                .WithOne(n => n.AssocHost)
-                .HasForeignKey<NodeHostMapping>(nh => nh.NodeID);
-
-            modelBuilder.Entity<NodeHostMapping>()
-                .HasOne(nh => nh.Host)
-                .WithOne(h => h.NodeHostMapping)
-                .HasForeignKey<NodeHostMapping>(nh => nh.HostID);
+                .HasKey(nh => new { nh.NodeID, nh.HostID });
 
             modelBuilder.Entity<NetworkUserMapping>()
                 .HasKey(nu => new { nu.NodeID, nu.NetworkUserID });
@@ -70,31 +62,90 @@ namespace microcmdb.Web.Data
             modelBuilder.Entity<HostServiceMapping>()
                 .HasKey(hs => new { hs.HostID, hs.ServiceID });
 
-            
+            #endregion
 
-            /*
-             * Initial relationships and tables
-             * 
-             *
-            builder.Entity<ConfigItem>().ToTable("ConfigItem");
-            builder.Entity<NetworkUser>().ToTable("NetworkUser");
-            builder.Entity<Models.Host>().ToTable("Host");
-            builder.Entity<Node>().ToTable("Node");
-            builder.Entity<Service>().ToTable("Service");
-            builder.Entity<Software>().ToTable("Software");
-            builder.Entity<CINodeMapping>().ToTable("CINodeMapping");
-            builder.Entity<CINodeMapping>().HasKey(c => c.CINodeMappingID);
-            builder.Entity<NodeHostMapping>().ToTable("NodeHostMapping");
-            builder.Entity<NodeHostMapping>().HasKey(c => c.NodeHostMappingID);
-            builder.Entity<HostServiceMapping>().ToTable("HostServiceMapping");
-            builder.Entity<HostServiceMapping>().HasKey(c => c.HostServiceMappingID);
-            builder.Entity<NetworkUserMapping>().ToTable("NetworkUserMapping");
-            builder.Entity<NetworkUserMapping>().HasKey(c => c.NetworkUserID);
-            builder.Entity<SoftwareInstallation>().ToTable("SoftwareInstallation");
-            builder.Entity<SoftwareInstallation>().HasKey(c => c.SoftwareInstallationID);
-            initialSeed(this);
-            */
+            // Set Id properties to auto-increment
 
+            #region Set Id properties to auto-increment
+
+            modelBuilder.Entity<ConfigItem>()
+                .Property(c => c.ConfigItemID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Node>()
+                .Property(n => n.NodeID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Models.Host>()
+                .Property(h => h.HostID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Software>()
+                .Property(sw => sw.SoftwareID)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Service>()
+                .Property(svc => svc.ServiceID)
+                .ValueGeneratedOnAdd();
+            #endregion
+
+
+            #region Define relationships and foreign keys
+
+            // ConfigItem entity
+            modelBuilder.Entity<ConfigItem>()
+                .HasOne(c => c.Node)
+                .WithOne(c => c.ConfigItem)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Node entity has one Node to one ConfigItem
+            modelBuilder.Entity<Node>()
+                .HasOne(n => n.ConfigItem)
+                .WithOne(n => n.Node)
+                .HasForeignKey<Node>(n => n.ConfigItemID)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Host has a one-to-one relationship with Node
+            modelBuilder.Entity<Node>()
+                .HasOne(n => n.Host)
+                .WithOne(n => n.Node)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Define the relationship between Host and Node
+            modelBuilder.Entity<Models.Host>()
+                .HasOne(h => h.Node)
+                .WithOne(n => n.Host)
+                .HasForeignKey<Models.Host>(h => h.NodeId) // Assuming the foreign key property name is "NodeId"
+                .IsRequired(true) // Assuming a host must belong to a node
+                .OnDelete(DeleteBehavior.Cascade); // Depending on your requirements
+
+
+            // Host has a one-to-many relationship with Services
+            modelBuilder.Entity<Models.Host>()
+                .HasMany(h => h.Services)
+                .WithOne(svc => svc.Host)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<NetworkUserMapping>()
+                .HasOne(nu => nu.Node)
+                .WithMany(n => n.NetworkUsers)
+                .HasForeignKey(nu => nu.NodeID)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            modelBuilder.Entity<NetworkUserMapping>()
+                .HasOne(nu => nu.NetworkUser)
+                .WithMany(u => u.AllowedNodes)
+                .HasForeignKey(nu => nu.NetworkUserID)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Software has a one-to-many relationship with SoftwareInstallation
+            modelBuilder.Entity<Software>()
+                .HasMany(sw => sw.Installations)
+                .WithOne(si => si.Software)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
+            #endregion
         }
 
         public void SeedData()
@@ -102,29 +153,31 @@ namespace microcmdb.Web.Data
             if (!ConfigItems.Any())
             {
                 // Create ConfigItems
-                var amiga500 = new ConfigItem { Name = "Amiga 500", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
-                var amstradCPC6128 = new ConfigItem { Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
-                var intelAtomNAS = new ConfigItem { Name = "16TB Intel Atom NAS", PurchaseDate = DateTime.Now, DeployLoc = "Datacenter" };
+                var cA500 = new ConfigItem { ConfigItemID = 1, Name = "Amiga 500", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
+                var cA6128 = new ConfigItem { ConfigItemID = 2, Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
+                var cNAS = new ConfigItem { ConfigItemID = 3, Name = "16TB Intel Atom NAS", PurchaseDate = DateTime.Now, DeployLoc = "Datacenter" };
 
                 // Add ConfigItems to context
-                ConfigItems.AddRange(amiga500, amstradCPC6128, intelAtomNAS);
+                ConfigItems.AddRange(cA500, cA6128, cNAS);
                 SaveChanges();
 
                 // Create Nodes
-                var nodeAmiga500 = new Node { Name = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20, CINodeMapping = new CINodeMapping { ConfigItem = amiga500 } };
-                var nodeAmstradCPC6128 = new Node { Name = "Amstrad CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3, CINodeMapping = new CINodeMapping { ConfigItem = amstradCPC6128 } };
-                var nodeIntelAtomNAS = new Node { Name = "16TB Intel Atom NAS", OS_Version = "Custom NAS OS", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000, CINodeMapping = new CINodeMapping { ConfigItem = intelAtomNAS } };
+                var nA500 = new Node { NodeID = 1, Name = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20, ConfigItem = cA500, ConfigItemID = 1  };
+                var nA6128 = new Node { NodeID = 2, Name = "Amstrad CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3, ConfigItem = cA6128, ConfigItemID = 2};
+                var nNAS = new Node { NodeID = 3, Name = "16TB Intel Atom NAS", OS_Version = "Custom NAS OS", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000, ConfigItem = cNAS, ConfigItemID = 3 };
 
                 // Add Nodes to context
-                Nodes.AddRange(nodeAmiga500, nodeAmstradCPC6128, nodeIntelAtomNAS);
+                Nodes.AddRange(nA500, nA6128, nNAS);
                 SaveChanges();
+
+                var hNAS = new Models.Host { Name = "NAS Host", Node = nNAS, NodeId =  };
 
                 // Create Relationships
                 var networkUser = new NetworkUser { Username = "JohnDoe", Email = "john@example.com" };
-                var networkUserMapping = new NetworkUserMapping { Node = nodeAmiga500, NetworkUser = networkUser };
+                var networkUserMapping = new NetworkUserMapping { Node = nNAS, NetworkUser = networkUser };
 
                 var software = new Software { Name = "Example Software", Version = "1.0" };
-                var softwareInstallation = new SoftwareInstallation { Node = nodeIntelAtomNAS, Software = software };
+                var softwareInstallation = new SoftwareInstallation { Node = nNAS, Software = software };
 
                 var service = new Service { Protocol = "HTTP", URL = "http://example.com", PortNum = 80 };
                 var hostServiceMapping = new HostServiceMapping { Host = new Models.Host { Name = "Example Host" }, Service = service };

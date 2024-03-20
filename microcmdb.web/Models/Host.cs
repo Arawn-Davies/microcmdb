@@ -12,8 +12,9 @@ namespace microcmdb.Web.Models
         [Display(Name = "Hostname")]
         public string Name { get; set; } = string.Empty;
 
-        public NodeHostMapping NodeHostMapping { get; set; }
+        public int? NodeId { get; set; }
+        public Node Node { get; set; }
 
-        public ICollection<HostServiceMapping> HostServices { get; set; } = new List<HostServiceMapping>();
+        public ICollection<Service> Services { get; set; } = new List<Service>();
     }
 }

@@ -37,10 +37,12 @@ namespace microcmdb.Web.Models
         public string? IPaddr { get; set; }
 
         // A required field for which ConfigItem the node is associated with
+        public int? ConfigItemID { get; set; }
         [Display(Name = "Linked Configuration Item")]
-        public CINodeMapping? CINodeMapping { get; set; }
+        public ConfigItem ConfigItem { get; set; }
 
-        public NodeHostMapping? AssocHost { get; set; }
+        public int? HostId { get; set; }
+        public Host Host { get; set; }
 
         [Display(Name = "Installed Software")]
         public ICollection<SoftwareInstallation> InstalledSoftware { get; set; } = new List<SoftwareInstallation>();

@@ -20,6 +20,8 @@ namespace microcmdb.Web.Models
         [Display(Name = "Port Number")]
         public int PortNum{ get; set; }
 
-        public HostServiceMapping HostServiceMapping { get; set; }
+        public int? HostId { get; set; }
+        public Host Host { get; set; }
+        
     }
 }
