@@ -153,39 +153,48 @@ namespace microcmdb.Web.Data
             if (!ConfigItems.Any())
             {
                 // Create ConfigItems
-                var cA500 = new ConfigItem { ConfigItemID = 1, Name = "Amiga 500", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
-                var cA6128 = new ConfigItem { ConfigItemID = 2, Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
-                var cNAS = new ConfigItem { ConfigItemID = 3, Name = "16TB Intel Atom NAS", PurchaseDate = DateTime.Now, DeployLoc = "Datacenter" };
+                var cA500 = new ConfigItem { Name = "Amiga 500", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
+                var cA6128 = new ConfigItem { Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
+                var cNAS = new ConfigItem { Name = "16TB Intel Atom NAS", PurchaseDate = DateTime.Now, DeployLoc = "Datacenter" };
 
                 // Add ConfigItems to context
                 ConfigItems.AddRange(cA500, cA6128, cNAS);
                 SaveChanges();
 
                 // Create Nodes
-                var nA500 = new Node { NodeID = 1, Name = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20, ConfigItem = cA500, ConfigItemID = 1  };
-                var nA6128 = new Node { NodeID = 2, Name = "Amstrad CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3, ConfigItem = cA6128, ConfigItemID = 2};
-                var nNAS = new Node { NodeID = 3, Name = "16TB Intel Atom NAS", OS_Version = "Custom NAS OS", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000, ConfigItem = cNAS, ConfigItemID = 3 };
+                var nA500 = new Node { Name = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20, ConfigItem = cA500 };
+                var nA6128 = new Node { Name = "Amstrad CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3, ConfigItem = cA6128 };
+                var nNAS = new Node { Name = "16TB Intel Atom NAS", OS_Version = "Custom NAS OS", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000, ConfigItem = cNAS };
 
                 // Add Nodes to context
                 Nodes.AddRange(nA500, nA6128, nNAS);
                 SaveChanges();
 
-                var hNAS = new Models.Host { Name = "NAS Host", Node = nNAS, NodeId =  };
+                var hNAS = new Models.Host { Name = "NAS Host", Node = nNAS};
+                Hosts.Add(hNAS);
 
                 // Create Relationships
                 var networkUser = new NetworkUser { Username = "JohnDoe", Email = "john@example.com" };
-                var networkUserMapping = new NetworkUserMapping { Node = nNAS, NetworkUser = networkUser };
+                NetworkUsers.Add(networkUser);
 
                 var software = new Software { Name = "Example Software", Version = "1.0" };
-                var softwareInstallation = new SoftwareInstallation { Node = nNAS, Software = software };
-
-                var service = new Service { Protocol = "HTTP", URL = "http://example.com", PortNum = 80 };
-                var hostServiceMapping = new HostServiceMapping { Host = new Models.Host { Name = "Example Host" }, Service = service };
-
-                NetworkUsers.Add(networkUser);
                 Software.Add(software);
+
+                var service = new Service { Protocol = "HTTP", URL = "http://" + hNAS.Node.IPaddr + "/", PortNum = 80, Host = hNAS };
                 Services.Add(service);
-                Hosts.Add(hostServiceMapping.Host);
+
+                var networkUserMapping = new NetworkUserMapping { Node = nNAS, NetworkUser = networkUser };
+                UserMappings.Add(networkUserMapping);
+
+                
+
+                var softwareInstallation = new SoftwareInstallation { Node = nA500, Software = software };
+                nA500.InstalledSoftware.Add(softwareInstallation);
+                SoftwareInstallations.Add(softwareInstallation);
+
+                var hostServiceMapping = new HostServiceMapping { Host = hNAS, Service = service };
+                HostServiceMappings.Add(hostServiceMapping);
+                
                 SaveChanges();
             }
         }

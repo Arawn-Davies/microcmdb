@@ -51,7 +51,7 @@ namespace microcmdb.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ConfigItem",
+                name: "ConfigItems",
                 columns: table => new
                 {
                     ConfigItemID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -64,24 +64,11 @@ namespace microcmdb.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ConfigItem", x => x.ConfigItemID);
+                    table.PrimaryKey("PK_ConfigItems", x => x.ConfigItemID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Host",
-                columns: table => new
-                {
-                    HostID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Host", x => x.HostID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NetworkUser",
+                name: "NetworkUsers",
                 columns: table => new
                 {
                     NetworkUserID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -93,22 +80,7 @@ namespace microcmdb.Web.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NetworkUser", x => x.NetworkUserID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Service",
-                columns: table => new
-                {
-                    ServiceID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Protocol = table.Column<string>(type: "TEXT", nullable: false),
-                    URL = table.Column<string>(type: "TEXT", nullable: false),
-                    PortNum = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Service", x => x.ServiceID);
+                    table.PrimaryKey("PK_NetworkUsers", x => x.NetworkUserID);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,7 +206,7 @@ namespace microcmdb.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Node",
+                name: "Nodes",
                 columns: table => new
                 {
                     NodeID = table.Column<int>(type: "INTEGER", nullable: false)
@@ -245,141 +217,179 @@ namespace microcmdb.Web.Migrations
                     RAM = table.Column<double>(type: "REAL", nullable: true),
                     Storage = table.Column<double>(type: "REAL", nullable: true),
                     IPaddr = table.Column<string>(type: "TEXT", nullable: true),
-                    ConfigItemID = table.Column<int>(type: "INTEGER", nullable: false)
+                    ConfigItemID = table.Column<int>(type: "INTEGER", nullable: false),
+                    HostId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Node", x => x.NodeID);
+                    table.PrimaryKey("PK_Nodes", x => x.NodeID);
                     table.ForeignKey(
-                        name: "FK_Node_ConfigItem_ConfigItemID",
+                        name: "FK_Nodes_ConfigItems_ConfigItemID",
                         column: x => x.ConfigItemID,
-                        principalTable: "ConfigItem",
+                        principalTable: "ConfigItems",
                         principalColumn: "ConfigItemID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
-                name: "HostServiceMapping",
-                columns: table => new
-                {
-                    HostID = table.Column<int>(type: "INTEGER", nullable: false),
-                    ServiceID = table.Column<int>(type: "INTEGER", nullable: false),
-                    HostServiceMappingID = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_HostServiceMapping", x => new { x.HostID, x.ServiceID });
-                    table.ForeignKey(
-                        name: "FK_HostServiceMapping_Host_HostID",
-                        column: x => x.HostID,
-                        principalTable: "Host",
-                        principalColumn: "HostID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_HostServiceMapping_Service_ServiceID",
-                        column: x => x.ServiceID,
-                        principalTable: "Service",
-                        principalColumn: "ServiceID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CINodeMapping",
+                name: "CINodeMappings",
                 columns: table => new
                 {
                     ConfigItemID = table.Column<int>(type: "INTEGER", nullable: false),
-                    NodeID = table.Column<int>(type: "INTEGER", nullable: false),
-                    CINodeMappingID = table.Column<int>(type: "INTEGER", nullable: false)
+                    NodeID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CINodeMapping", x => new { x.ConfigItemID, x.NodeID });
+                    table.PrimaryKey("PK_CINodeMappings", x => new { x.ConfigItemID, x.NodeID });
                     table.ForeignKey(
-                        name: "FK_CINodeMapping_ConfigItem_ConfigItemID",
+                        name: "FK_CINodeMappings_ConfigItems_ConfigItemID",
                         column: x => x.ConfigItemID,
-                        principalTable: "ConfigItem",
+                        principalTable: "ConfigItems",
                         principalColumn: "ConfigItemID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CINodeMapping_Node_NodeID",
+                        name: "FK_CINodeMappings_Nodes_NodeID",
                         column: x => x.NodeID,
-                        principalTable: "Node",
+                        principalTable: "Nodes",
                         principalColumn: "NodeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NetworkUserMapping",
+                name: "Hosts",
                 columns: table => new
                 {
-                    NodeID = table.Column<int>(type: "INTEGER", nullable: false),
-                    NetworkUserID = table.Column<int>(type: "INTEGER", nullable: false),
-                    NetworkUserMappingID = table.Column<int>(type: "INTEGER", nullable: false)
+                    HostID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    NodeId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NetworkUserMapping", x => new { x.NetworkUserID, x.NodeID });
+                    table.PrimaryKey("PK_Hosts", x => x.HostID);
                     table.ForeignKey(
-                        name: "FK_NetworkUserMapping_NetworkUser_NetworkUserID",
-                        column: x => x.NetworkUserID,
-                        principalTable: "NetworkUser",
-                        principalColumn: "NetworkUserID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NetworkUserMapping_Node_NodeID",
-                        column: x => x.NodeID,
-                        principalTable: "Node",
+                        name: "FK_Hosts_Nodes_NodeId",
+                        column: x => x.NodeId,
+                        principalTable: "Nodes",
                         principalColumn: "NodeID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NodeHostMapping",
+                name: "SoftwareInstallations",
                 columns: table => new
                 {
                     NodeID = table.Column<int>(type: "INTEGER", nullable: false),
-                    HostID = table.Column<int>(type: "INTEGER", nullable: false),
-                    NodeHostMappingID = table.Column<int>(type: "INTEGER", nullable: false)
+                    SoftwareID = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NodeHostMapping", x => new { x.NodeID, x.HostID });
+                    table.PrimaryKey("PK_SoftwareInstallations", x => new { x.NodeID, x.SoftwareID });
                     table.ForeignKey(
-                        name: "FK_NodeHostMapping_Host_HostID",
-                        column: x => x.HostID,
-                        principalTable: "Host",
-                        principalColumn: "HostID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_NodeHostMapping_Node_NodeID",
+                        name: "FK_SoftwareInstallations_Nodes_NodeID",
                         column: x => x.NodeID,
-                        principalTable: "Node",
-                        principalColumn: "NodeID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SoftwareInstallation",
-                columns: table => new
-                {
-                    NodeID = table.Column<int>(type: "INTEGER", nullable: false),
-                    SoftwareID = table.Column<int>(type: "INTEGER", nullable: false),
-                    SoftwareInstallationID = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SoftwareInstallation", x => new { x.SoftwareID, x.NodeID });
-                    table.ForeignKey(
-                        name: "FK_SoftwareInstallation_Node_NodeID",
-                        column: x => x.NodeID,
-                        principalTable: "Node",
+                        principalTable: "Nodes",
                         principalColumn: "NodeID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_SoftwareInstallation_Software_SoftwareID",
+                        name: "FK_SoftwareInstallations_Software_SoftwareID",
                         column: x => x.SoftwareID,
                         principalTable: "Software",
                         principalColumn: "SoftwareID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserMappings",
+                columns: table => new
+                {
+                    NodeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    NetworkUserID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserMappings", x => new { x.NodeID, x.NetworkUserID });
+                    table.ForeignKey(
+                        name: "FK_UserMappings_NetworkUsers_NetworkUserID",
+                        column: x => x.NetworkUserID,
+                        principalTable: "NetworkUsers",
+                        principalColumn: "NetworkUserID",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_UserMappings_Nodes_NodeID",
+                        column: x => x.NodeID,
+                        principalTable: "Nodes",
+                        principalColumn: "NodeID",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NodeHostMappings",
+                columns: table => new
+                {
+                    NodeID = table.Column<int>(type: "INTEGER", nullable: false),
+                    HostID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NodeHostMappings", x => new { x.NodeID, x.HostID });
+                    table.ForeignKey(
+                        name: "FK_NodeHostMappings_Hosts_HostID",
+                        column: x => x.HostID,
+                        principalTable: "Hosts",
+                        principalColumn: "HostID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NodeHostMappings_Nodes_NodeID",
+                        column: x => x.NodeID,
+                        principalTable: "Nodes",
+                        principalColumn: "NodeID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Services",
+                columns: table => new
+                {
+                    ServiceID = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Protocol = table.Column<string>(type: "TEXT", nullable: false),
+                    URL = table.Column<string>(type: "TEXT", nullable: false),
+                    PortNum = table.Column<int>(type: "INTEGER", nullable: false),
+                    HostId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Services", x => x.ServiceID);
+                    table.ForeignKey(
+                        name: "FK_Services_Hosts_HostId",
+                        column: x => x.HostId,
+                        principalTable: "Hosts",
+                        principalColumn: "HostID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HostServiceMappings",
+                columns: table => new
+                {
+                    HostID = table.Column<int>(type: "INTEGER", nullable: false),
+                    ServiceID = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HostServiceMappings", x => new { x.HostID, x.ServiceID });
+                    table.ForeignKey(
+                        name: "FK_HostServiceMappings_Hosts_HostID",
+                        column: x => x.HostID,
+                        principalTable: "Hosts",
+                        principalColumn: "HostID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HostServiceMappings_Services_ServiceID",
+                        column: x => x.ServiceID,
+                        principalTable: "Services",
+                        principalColumn: "ServiceID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -421,48 +431,46 @@ namespace microcmdb.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CINodeMapping_ConfigItemID",
-                table: "CINodeMapping",
+                name: "IX_CINodeMappings_NodeID",
+                table: "CINodeMappings",
+                column: "NodeID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Hosts_NodeId",
+                table: "Hosts",
+                column: "NodeId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HostServiceMappings_ServiceID",
+                table: "HostServiceMappings",
+                column: "ServiceID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NodeHostMappings_HostID",
+                table: "NodeHostMappings",
+                column: "HostID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Nodes_ConfigItemID",
+                table: "Nodes",
                 column: "ConfigItemID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_CINodeMapping_NodeID",
-                table: "CINodeMapping",
-                column: "NodeID");
+                name: "IX_Services_HostId",
+                table: "Services",
+                column: "HostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HostServiceMapping_ServiceID",
-                table: "HostServiceMapping",
-                column: "ServiceID",
-                unique: true);
+                name: "IX_SoftwareInstallations_SoftwareID",
+                table: "SoftwareInstallations",
+                column: "SoftwareID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NetworkUserMapping_NodeID",
-                table: "NetworkUserMapping",
-                column: "NodeID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Node_ConfigItemID",
-                table: "Node",
-                column: "ConfigItemID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeHostMapping_HostID",
-                table: "NodeHostMapping",
-                column: "HostID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_NodeHostMapping_NodeID",
-                table: "NodeHostMapping",
-                column: "NodeID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SoftwareInstallation_NodeID",
-                table: "SoftwareInstallation",
-                column: "NodeID");
+                name: "IX_UserMappings_NetworkUserID",
+                table: "UserMappings",
+                column: "NetworkUserID");
         }
 
         /// <inheritdoc />
@@ -484,19 +492,19 @@ namespace microcmdb.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CINodeMapping");
+                name: "CINodeMappings");
 
             migrationBuilder.DropTable(
-                name: "HostServiceMapping");
+                name: "HostServiceMappings");
 
             migrationBuilder.DropTable(
-                name: "NetworkUserMapping");
+                name: "NodeHostMappings");
 
             migrationBuilder.DropTable(
-                name: "NodeHostMapping");
+                name: "SoftwareInstallations");
 
             migrationBuilder.DropTable(
-                name: "SoftwareInstallation");
+                name: "UserMappings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -505,22 +513,22 @@ namespace microcmdb.Web.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Service");
-
-            migrationBuilder.DropTable(
-                name: "NetworkUser");
-
-            migrationBuilder.DropTable(
-                name: "Host");
-
-            migrationBuilder.DropTable(
-                name: "Node");
+                name: "Services");
 
             migrationBuilder.DropTable(
                 name: "Software");
 
             migrationBuilder.DropTable(
-                name: "ConfigItem");
+                name: "NetworkUsers");
+
+            migrationBuilder.DropTable(
+                name: "Hosts");
+
+            migrationBuilder.DropTable(
+                name: "Nodes");
+
+            migrationBuilder.DropTable(
+                name: "ConfigItems");
         }
     }
 }

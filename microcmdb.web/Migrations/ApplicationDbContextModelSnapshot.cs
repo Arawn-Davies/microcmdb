@@ -15,7 +15,7 @@ namespace microcmdb.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "7.0.16");
+            modelBuilder.HasAnnotation("ProductVersion", "7.0.17");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -215,23 +215,15 @@ namespace microcmdb.Web.Migrations
 
             modelBuilder.Entity("microcmdb.Web.Models.CINodeMapping", b =>
                 {
-                    b.Property<int>("CINodeMappingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("ConfigItemID")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("NodeID")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("CINodeMappingID");
+                    b.HasKey("ConfigItemID", "NodeID");
 
-                    b.HasIndex("ConfigItemID")
-                        .IsUnique();
-
-                    b.HasIndex("NodeID")
-                        .IsUnique();
+                    b.HasIndex("NodeID");
 
                     b.ToTable("CINodeMappings");
                 });
@@ -274,7 +266,14 @@ namespace microcmdb.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int?>("NodeId")
+                        .IsRequired()
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("HostID");
+
+                    b.HasIndex("NodeId")
+                        .IsUnique();
 
                     b.ToTable("Hosts");
                 });
@@ -287,13 +286,9 @@ namespace microcmdb.Web.Migrations
                     b.Property<int>("ServiceID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("HostServiceMappingID")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("HostID", "ServiceID");
 
-                    b.HasIndex("ServiceID")
-                        .IsUnique();
+                    b.HasIndex("ServiceID");
 
                     b.ToTable("HostServiceMappings");
                 });
@@ -330,9 +325,6 @@ namespace microcmdb.Web.Migrations
                     b.Property<int>("NetworkUserID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NetworkUserMappingID")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("NodeID", "NetworkUserID");
 
                     b.HasIndex("NetworkUserID");
@@ -349,6 +341,13 @@ namespace microcmdb.Web.Migrations
                     b.Property<string>("CPU_Arch")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int?>("ConfigItemID")
+                        .IsRequired()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HostId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("IPaddr")
                         .HasColumnType("TEXT");
@@ -369,28 +368,23 @@ namespace microcmdb.Web.Migrations
 
                     b.HasKey("NodeID");
 
+                    b.HasIndex("ConfigItemID")
+                        .IsUnique();
+
                     b.ToTable("Nodes");
                 });
 
             modelBuilder.Entity("microcmdb.Web.Models.NodeHostMapping", b =>
                 {
-                    b.Property<int>("NodeHostMappingID")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("NodeID")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("HostID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("NodeID")
-                        .HasColumnType("INTEGER");
+                    b.HasKey("NodeID", "HostID");
 
-                    b.HasKey("NodeHostMappingID");
-
-                    b.HasIndex("HostID")
-                        .IsUnique();
-
-                    b.HasIndex("NodeID")
-                        .IsUnique();
+                    b.HasIndex("HostID");
 
                     b.ToTable("NodeHostMappings");
                 });
@@ -399,6 +393,10 @@ namespace microcmdb.Web.Migrations
                 {
                     b.Property<int>("ServiceID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HostId")
+                        .IsRequired()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("PortNum")
@@ -413,6 +411,8 @@ namespace microcmdb.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("ServiceID");
+
+                    b.HasIndex("HostId");
 
                     b.ToTable("Services");
                 });
@@ -448,9 +448,6 @@ namespace microcmdb.Web.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SoftwareID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("SoftwareInstallationID")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("NodeID", "SoftwareID");
@@ -514,14 +511,14 @@ namespace microcmdb.Web.Migrations
             modelBuilder.Entity("microcmdb.Web.Models.CINodeMapping", b =>
                 {
                     b.HasOne("microcmdb.Web.Models.ConfigItem", "ConfigItem")
-                        .WithOne("CINodeMapping")
-                        .HasForeignKey("microcmdb.Web.Models.CINodeMapping", "ConfigItemID")
+                        .WithMany()
+                        .HasForeignKey("ConfigItemID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("microcmdb.Web.Models.Node", "Node")
-                        .WithOne("CINodeMapping")
-                        .HasForeignKey("microcmdb.Web.Models.CINodeMapping", "NodeID")
+                        .WithMany()
+                        .HasForeignKey("NodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -530,17 +527,28 @@ namespace microcmdb.Web.Migrations
                     b.Navigation("Node");
                 });
 
+            modelBuilder.Entity("microcmdb.Web.Models.Host", b =>
+                {
+                    b.HasOne("microcmdb.Web.Models.Node", "Node")
+                        .WithOne("Host")
+                        .HasForeignKey("microcmdb.Web.Models.Host", "NodeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Node");
+                });
+
             modelBuilder.Entity("microcmdb.Web.Models.HostServiceMapping", b =>
                 {
                     b.HasOne("microcmdb.Web.Models.Host", "Host")
-                        .WithMany("HostServices")
+                        .WithMany()
                         .HasForeignKey("HostID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("microcmdb.Web.Models.Service", "Service")
-                        .WithOne("HostServiceMapping")
-                        .HasForeignKey("microcmdb.Web.Models.HostServiceMapping", "ServiceID")
+                        .WithMany()
+                        .HasForeignKey("ServiceID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -554,13 +562,13 @@ namespace microcmdb.Web.Migrations
                     b.HasOne("microcmdb.Web.Models.NetworkUser", "NetworkUser")
                         .WithMany("AllowedNodes")
                         .HasForeignKey("NetworkUserID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.HasOne("microcmdb.Web.Models.Node", "Node")
                         .WithMany("NetworkUsers")
                         .HasForeignKey("NodeID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.SetNull)
                         .IsRequired();
 
                     b.Navigation("NetworkUser");
@@ -568,23 +576,45 @@ namespace microcmdb.Web.Migrations
                     b.Navigation("Node");
                 });
 
+            modelBuilder.Entity("microcmdb.Web.Models.Node", b =>
+                {
+                    b.HasOne("microcmdb.Web.Models.ConfigItem", "ConfigItem")
+                        .WithOne("Node")
+                        .HasForeignKey("microcmdb.Web.Models.Node", "ConfigItemID")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .IsRequired();
+
+                    b.Navigation("ConfigItem");
+                });
+
             modelBuilder.Entity("microcmdb.Web.Models.NodeHostMapping", b =>
                 {
                     b.HasOne("microcmdb.Web.Models.Host", "Host")
-                        .WithOne("NodeHostMapping")
-                        .HasForeignKey("microcmdb.Web.Models.NodeHostMapping", "HostID")
+                        .WithMany()
+                        .HasForeignKey("HostID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("microcmdb.Web.Models.Node", "Node")
-                        .WithOne("AssocHost")
-                        .HasForeignKey("microcmdb.Web.Models.NodeHostMapping", "NodeID")
+                        .WithMany()
+                        .HasForeignKey("NodeID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Host");
 
                     b.Navigation("Node");
+                });
+
+            modelBuilder.Entity("microcmdb.Web.Models.Service", b =>
+                {
+                    b.HasOne("microcmdb.Web.Models.Host", "Host")
+                        .WithMany("Services")
+                        .HasForeignKey("HostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Host");
                 });
 
             modelBuilder.Entity("microcmdb.Web.Models.SoftwareInstallation", b =>
@@ -596,7 +626,7 @@ namespace microcmdb.Web.Migrations
                         .IsRequired();
 
                     b.HasOne("microcmdb.Web.Models.Software", "Software")
-                        .WithMany("InstalledOn")
+                        .WithMany("Installations")
                         .HasForeignKey("SoftwareID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -608,15 +638,12 @@ namespace microcmdb.Web.Migrations
 
             modelBuilder.Entity("microcmdb.Web.Models.ConfigItem", b =>
                 {
-                    b.Navigation("CINodeMapping");
+                    b.Navigation("Node");
                 });
 
             modelBuilder.Entity("microcmdb.Web.Models.Host", b =>
                 {
-                    b.Navigation("HostServices");
-
-                    b.Navigation("NodeHostMapping")
-                        .IsRequired();
+                    b.Navigation("Services");
                 });
 
             modelBuilder.Entity("microcmdb.Web.Models.NetworkUser", b =>
@@ -626,24 +653,17 @@ namespace microcmdb.Web.Migrations
 
             modelBuilder.Entity("microcmdb.Web.Models.Node", b =>
                 {
-                    b.Navigation("AssocHost");
-
-                    b.Navigation("CINodeMapping");
+                    b.Navigation("Host")
+                        .IsRequired();
 
                     b.Navigation("InstalledSoftware");
 
                     b.Navigation("NetworkUsers");
                 });
 
-            modelBuilder.Entity("microcmdb.Web.Models.Service", b =>
-                {
-                    b.Navigation("HostServiceMapping")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("microcmdb.Web.Models.Software", b =>
                 {
-                    b.Navigation("InstalledOn");
+                    b.Navigation("Installations");
                 });
 #pragma warning restore 612, 618
         }
