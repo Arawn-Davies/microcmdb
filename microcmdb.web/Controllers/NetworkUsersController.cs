@@ -10,90 +10,87 @@ using microcmdb.Web.Models;
 
 namespace microcmdb.web.Controllers
 {
-    public class NodesController : Controller
+    public class NetworkUsersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public NodesController(ApplicationDbContext context)
+        public NetworkUsersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Nodes
+        // GET: NetworkUsers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Nodes.Include(n => n.ConfigItem);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.NetworkUsers != null ? 
+                          View(await _context.NetworkUsers.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.NetworkUsers'  is null.");
         }
 
-        // GET: Nodes/Details/5
+        // GET: NetworkUsers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.NetworkUsers == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var networkUser = await _context.NetworkUsers
+                .FirstOrDefaultAsync(m => m.NetworkUserID == id);
+            if (networkUser == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(networkUser);
         }
 
-        // GET: Nodes/Create
+        // GET: NetworkUsers/Create
         public IActionResult Create()
         {
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name");
             return View();
         }
 
-        // POST: Nodes/Create
+        // POST: NetworkUsers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Create([Bind("NetworkUserID,Username,Email,Firstname,Lastname")] NetworkUser networkUser)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(node);
+                _context.Add(networkUser);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(networkUser);
         }
 
-        // GET: Nodes/Edit/5
+        // GET: NetworkUsers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.NetworkUsers == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes.FindAsync(id);
-            if (node == null)
+            var networkUser = await _context.NetworkUsers.FindAsync(id);
+            if (networkUser == null)
             {
                 return NotFound();
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(networkUser);
         }
 
-        // POST: Nodes/Edit/5
+        // POST: NetworkUsers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Edit(int id, [Bind("NetworkUserID,Username,Email,Firstname,Lastname")] NetworkUser networkUser)
         {
-            if (id != node.NodeID)
+            if (id != networkUser.NetworkUserID)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace microcmdb.web.Controllers
             {
                 try
                 {
-                    _context.Update(node);
+                    _context.Update(networkUser);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NodeExists(node.NodeID))
+                    if (!NetworkUserExists(networkUser.NetworkUserID))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace microcmdb.web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(networkUser);
         }
 
-        // GET: Nodes/Delete/5
+        // GET: NetworkUsers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.NetworkUsers == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var networkUser = await _context.NetworkUsers
+                .FirstOrDefaultAsync(m => m.NetworkUserID == id);
+            if (networkUser == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(networkUser);
         }
 
-        // POST: Nodes/Delete/5
+        // POST: NetworkUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Nodes == null)
+            if (_context.NetworkUsers == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Nodes'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.NetworkUsers'  is null.");
             }
-            var node = await _context.Nodes.FindAsync(id);
-            if (node != null)
+            var networkUser = await _context.NetworkUsers.FindAsync(id);
+            if (networkUser != null)
             {
-                _context.Nodes.Remove(node);
+                _context.NetworkUsers.Remove(networkUser);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NodeExists(int id)
+        private bool NetworkUserExists(int id)
         {
-          return (_context.Nodes?.Any(e => e.NodeID == id)).GetValueOrDefault();
+          return (_context.NetworkUsers?.Any(e => e.NetworkUserID == id)).GetValueOrDefault();
         }
     }
 }

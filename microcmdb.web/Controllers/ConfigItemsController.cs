@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using microcmdb.Web.Data;
 using microcmdb.Web.Models;
 
-namespace microcmdb.Web.Controllers
+namespace microcmdb.web.Controllers
 {
     public class ConfigItemsController : Controller
     {

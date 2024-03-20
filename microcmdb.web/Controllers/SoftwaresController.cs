@@ -10,90 +10,87 @@ using microcmdb.Web.Models;
 
 namespace microcmdb.web.Controllers
 {
-    public class NodesController : Controller
+    public class SoftwaresController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public NodesController(ApplicationDbContext context)
+        public SoftwaresController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Nodes
+        // GET: Softwares
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Nodes.Include(n => n.ConfigItem);
-            return View(await applicationDbContext.ToListAsync());
+              return _context.Software != null ? 
+                          View(await _context.Software.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.Software'  is null.");
         }
 
-        // GET: Nodes/Details/5
+        // GET: Softwares/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var software = await _context.Software
+                .FirstOrDefaultAsync(m => m.SoftwareID == id);
+            if (software == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(software);
         }
 
-        // GET: Nodes/Create
+        // GET: Softwares/Create
         public IActionResult Create()
         {
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name");
             return View();
         }
 
-        // POST: Nodes/Create
+        // POST: Softwares/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Create([Bind("SoftwareID,Name,Version,Developer,LicenseType")] Software software)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(node);
+                _context.Add(software);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(software);
         }
 
-        // GET: Nodes/Edit/5
+        // GET: Softwares/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes.FindAsync(id);
-            if (node == null)
+            var software = await _context.Software.FindAsync(id);
+            if (software == null)
             {
                 return NotFound();
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(software);
         }
 
-        // POST: Nodes/Edit/5
+        // POST: Softwares/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Edit(int id, [Bind("SoftwareID,Name,Version,Developer,LicenseType")] Software software)
         {
-            if (id != node.NodeID)
+            if (id != software.SoftwareID)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace microcmdb.web.Controllers
             {
                 try
                 {
-                    _context.Update(node);
+                    _context.Update(software);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NodeExists(node.NodeID))
+                    if (!SoftwareExists(software.SoftwareID))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace microcmdb.web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            return View(software);
         }
 
-        // GET: Nodes/Delete/5
+        // GET: Softwares/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Software == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var software = await _context.Software
+                .FirstOrDefaultAsync(m => m.SoftwareID == id);
+            if (software == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(software);
         }
 
-        // POST: Nodes/Delete/5
+        // POST: Softwares/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Nodes == null)
+            if (_context.Software == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Nodes'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Software'  is null.");
             }
-            var node = await _context.Nodes.FindAsync(id);
-            if (node != null)
+            var software = await _context.Software.FindAsync(id);
+            if (software != null)
             {
-                _context.Nodes.Remove(node);
+                _context.Software.Remove(software);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NodeExists(int id)
+        private bool SoftwareExists(int id)
         {
-          return (_context.Nodes?.Any(e => e.NodeID == id)).GetValueOrDefault();
+          return (_context.Software?.Any(e => e.SoftwareID == id)).GetValueOrDefault();
         }
     }
 }

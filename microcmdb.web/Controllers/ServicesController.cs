@@ -10,90 +10,90 @@ using microcmdb.Web.Models;
 
 namespace microcmdb.web.Controllers
 {
-    public class NodesController : Controller
+    public class ServicesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public NodesController(ApplicationDbContext context)
+        public ServicesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Nodes
+        // GET: Services
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Nodes.Include(n => n.ConfigItem);
+            var applicationDbContext = _context.Services.Include(s => s.Host);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Nodes/Details/5
+        // GET: Services/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var service = await _context.Services
+                .Include(s => s.Host)
+                .FirstOrDefaultAsync(m => m.ServiceID == id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(service);
         }
 
-        // GET: Nodes/Create
+        // GET: Services/Create
         public IActionResult Create()
         {
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name");
+            ViewData["HostId"] = new SelectList(_context.Hosts, "HostID", "Name");
             return View();
         }
 
-        // POST: Nodes/Create
+        // POST: Services/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Create([Bind("ServiceID,Protocol,URL,PortNum,HostId")] Service service)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(node);
+                _context.Add(service);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            ViewData["HostId"] = new SelectList(_context.Hosts, "HostID", "Name", service.HostId);
+            return View(service);
         }
 
-        // GET: Nodes/Edit/5
+        // GET: Services/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes.FindAsync(id);
-            if (node == null)
+            var service = await _context.Services.FindAsync(id);
+            if (service == null)
             {
                 return NotFound();
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            ViewData["HostId"] = new SelectList(_context.Hosts, "HostID", "Name", service.HostId);
+            return View(service);
         }
 
-        // POST: Nodes/Edit/5
+        // POST: Services/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NodeID,Name,OS_Version,CPU_Arch,RAM,Storage,IPaddr,ConfigItemID,HostId")] Node node)
+        public async Task<IActionResult> Edit(int id, [Bind("ServiceID,Protocol,URL,PortNum,HostId")] Service service)
         {
-            if (id != node.NodeID)
+            if (id != service.ServiceID)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace microcmdb.web.Controllers
             {
                 try
                 {
-                    _context.Update(node);
+                    _context.Update(service);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NodeExists(node.NodeID))
+                    if (!ServiceExists(service.ServiceID))
                     {
                         return NotFound();
                     }
@@ -118,51 +118,51 @@ namespace microcmdb.web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ConfigItemID"] = new SelectList(_context.ConfigItems, "ConfigItemID", "Name", node.ConfigItemID);
-            return View(node);
+            ViewData["HostId"] = new SelectList(_context.Hosts, "HostID", "Name", service.HostId);
+            return View(service);
         }
 
-        // GET: Nodes/Delete/5
+        // GET: Services/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Nodes == null)
+            if (id == null || _context.Services == null)
             {
                 return NotFound();
             }
 
-            var node = await _context.Nodes
-                .Include(n => n.ConfigItem)
-                .FirstOrDefaultAsync(m => m.NodeID == id);
-            if (node == null)
+            var service = await _context.Services
+                .Include(s => s.Host)
+                .FirstOrDefaultAsync(m => m.ServiceID == id);
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return View(node);
+            return View(service);
         }
 
-        // POST: Nodes/Delete/5
+        // POST: Services/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Nodes == null)
+            if (_context.Services == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Nodes'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.Services'  is null.");
             }
-            var node = await _context.Nodes.FindAsync(id);
-            if (node != null)
+            var service = await _context.Services.FindAsync(id);
+            if (service != null)
             {
-                _context.Nodes.Remove(node);
+                _context.Services.Remove(service);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NodeExists(int id)
+        private bool ServiceExists(int id)
         {
-          return (_context.Nodes?.Any(e => e.NodeID == id)).GetValueOrDefault();
+          return (_context.Services?.Any(e => e.ServiceID == id)).GetValueOrDefault();
         }
     }
 }

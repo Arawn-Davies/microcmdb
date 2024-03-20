@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using microcmdb.Web.Data;
 using microcmdb.Web.Models;
 
-namespace microcmdb.Web.Controllers
+namespace microcmdb.web.Controllers
 {
     public class HostsController : Controller
     {
@@ -91,7 +91,7 @@ namespace microcmdb.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HostID,Name,NodeId")] Models.Host host)
+        public async Task<IActionResult> Edit(int id, [Bind("HostID,Name,NodeId")] Web.Models.Host host)
         {
             if (id != host.HostID)
             {
