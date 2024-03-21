@@ -29,6 +29,13 @@ namespace microcmdb.common.Util
             // Placeholder implementation to retrieve Nodes
             Console.WriteLine("Retrieving Nodes...");
             // Replace this with actual logic to fetch Nodes from the CMDB backend
+            foreach (var node in Db.CurrentDbContext.Nodes)
+            {
+                Console.WriteLine("=================================================");
+                Console.WriteLine("ID: " + node.NodeID);
+                Console.WriteLine("Name: " + node.Name);
+                Console.WriteLine("OS: " + node.OS_Version);
+            }
         }
 
         public static void GetHosts()
@@ -43,6 +50,20 @@ namespace microcmdb.common.Util
             // Placeholder implementation to retrieve Services
             Console.WriteLine("Retrieving Services...");
             // Replace this with actual logic to fetch Services from the CMDB backend
+        }
+
+        public static void GetSoftware()
+        {
+            // Placeholder implementation to retrieve Software
+            Console.WriteLine("Retrieving Software...");
+            // Replace this with actual logic to fetch Software from the CMDB backend
+        }
+
+        public static void GetNetworkUsers()
+        {
+            // Placeholder implementation to retrieve NetworkUsers
+            Console.WriteLine("Retrieving NetworkUsers...");
+            // Replace this with actual logic to fetch NetworkUsers from the CMDB backend
         }
     }
 }
