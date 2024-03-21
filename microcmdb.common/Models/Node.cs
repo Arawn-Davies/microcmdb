@@ -32,20 +32,15 @@ namespace microcmdb.common.Models
         [Display(Name = "Storage")]
         public double? Storage { get; set; } 
         
-        // An optional field for the IP address of the node, if applicable
-        [Display(Name = "IP Address")]
-        public string? IPaddr { get; set; }
-
         // A required field for which ConfigItem the node is associated with
         public int? ConfigItemID { get; set; }
         [Display(Name = "Linked Configuration Item")]
-        public ConfigItem ConfigItem { get; set; }
+        public CINodeMapping? CINodeMapping { get; set; }
 
-        public int? HostId { get; set; }
-        public Host Host { get; set; }
+        public NodeHostMapping? NodeHostMapping { get; set; }
 
         [Display(Name = "Installed Software")]
-        public ICollection<Models.SoftwareInstallation> InstalledSoftware { get; set; } = new List<SoftwareInstallation>();
+        public ICollection<SoftwareInstallation> InstalledSoftware { get; set; } = new List<SoftwareInstallation>();
 
         public ICollection<NetworkUserMapping>? NetworkUsers { get; set; }
     }

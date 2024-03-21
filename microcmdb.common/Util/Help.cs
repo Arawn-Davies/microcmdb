@@ -8,7 +8,7 @@ namespace microcmdb.common.Util
 {
     public class Help
     {
-        static void DisplayHelp()
+        public static void DisplayHelp()
         {
             Console.WriteLine("Available Commands:");
             Console.WriteLine("  help               - Display available commands");

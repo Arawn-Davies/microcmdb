@@ -12,9 +12,12 @@ namespace microcmdb.common.Models
         [Display(Name = "Hostname")]
         public string Name { get; set; } = string.Empty;
 
-        public int? NodeId { get; set; }
-        public Node Node { get; set; }
+        // An optional field for the IP address of the node, if applicable
+        [Display(Name = "IP Address")]
+        public string? IPaddr { get; set; }
 
-        public ICollection<Service> Services { get; set; } = new List<Service>();
+        public NodeHostMapping? NodeHostMapping { get; set; }
+
+        public ICollection<HostServiceMapping> Services { get; set; } = new List<HostServiceMapping>();
     }
 }

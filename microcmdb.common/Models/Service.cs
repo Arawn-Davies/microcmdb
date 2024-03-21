@@ -12,16 +12,22 @@ namespace microcmdb.common.Models
         [Display(Name = "Service Protocol")]
         public string Protocol { get; set; } = string.Empty;
 
-        [Required]
         [Display(Name = "Location")]
-        public string URL { get; set; } = string.Empty;
+        public string? URL()
+        {
+            if (HostServiceMapping != null && HostServiceMapping.Host != null)
+            {
+                return HostServiceMapping.Host.IPaddr;
+            }
+            return string.Empty;
+        }
 
         [Required]
         [Display(Name = "Port Number")]
         public int PortNum{ get; set; }
 
         public int? HostId { get; set; }
-        public Host Host { get; set; }
+        public HostServiceMapping? HostServiceMapping { get; set; }
         
     }
 }

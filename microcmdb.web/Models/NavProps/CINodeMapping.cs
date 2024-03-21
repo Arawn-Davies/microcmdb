@@ -7,5 +7,12 @@
         public int ConfigItemID { get; set; }
         public int NodeID { get; set; }
 
+        public CINodeMapping(ConfigItem configItem, Node node)
+        {
+            ConfigItem = configItem;
+            Node = node;
+            ConfigItemID = configItem.ConfigItemID;
+            NodeID = node.NodeID;
+        }
     }
 }
