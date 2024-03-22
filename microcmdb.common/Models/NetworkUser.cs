@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class NetworkUser
+    public class NetworkUser : Entity
     {
         [Key]
         [Display(Name = "User ID")]

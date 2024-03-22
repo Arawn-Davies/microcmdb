@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class Node
+    public class Node : Entity
     {
         // A unique identifier for the node
         [Key]

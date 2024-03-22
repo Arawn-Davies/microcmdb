@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class ConfigItem
+    public class ConfigItem : Entity
     {
         /// <summary>
         /// A unique identifier for the ConfigItem

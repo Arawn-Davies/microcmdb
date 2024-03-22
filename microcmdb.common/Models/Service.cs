@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class Service
+    public class Service : Entity
     {
         [Key]
         [Display(Name = "Service ID")]

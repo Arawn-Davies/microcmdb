@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class Host
+    public class Host : Entity
     {
         [Key]
         [Display(Name = "Host ID")]

@@ -2,7 +2,7 @@
 
 namespace microcmdb.common.Models
 {
-    public class Software
+    public class Software : Entity
     {
         // A unique identifier for the software
         [Key]
