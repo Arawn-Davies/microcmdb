@@ -1,4 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose: Model class to represent Nodes in the microCMDB backend.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
 {
@@ -8,11 +18,8 @@ namespace microcmdb.common.Models
         [Key]
         [Display(Name = "Node ID")]
         public int NodeID { get; set; }
-        
-        // A required field for the name/description of the node
-        [Required]
-        [Display(Name = "Description")]
-        public string Name { get; set; } = string.Empty;
+
+        public override string DbTagPrefix => "NOD";
 
         // A required field for the operating system version
         [Required]

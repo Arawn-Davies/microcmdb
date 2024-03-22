@@ -1,4 +1,14 @@
-﻿namespace microcmdb.common
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// This file contains the main entry point for the microCMDB CLI application.
+
+namespace microcmdb.common
 {
     internal class Program
     {

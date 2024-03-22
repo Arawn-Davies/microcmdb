@@ -1,4 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Model class for ConfigItem objects. Inherits from Entity class.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
 {
@@ -10,13 +20,8 @@ namespace microcmdb.common.Models
         [Key]
         public int ConfigItemID { get; set; }
 
-        /// <summary>
-        /// A required field for the name of the ConfigItem
-        /// </summary>
-        [Display(Name = "Config Tag")]
-        [Required]
-        public string Name { get; set; } = string.Empty;
-
+        public override string DbTagPrefix => "CFG";
+        
         /// <summary>
         /// An optional field for the date the ConfigItem was purchased
         /// </summary>

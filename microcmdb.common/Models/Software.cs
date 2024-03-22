@@ -1,4 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose: Model class to represent Software in the microCMDB backend.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
 {
@@ -9,10 +19,7 @@ namespace microcmdb.common.Models
         [Display(Name = "Software ID")]
         public int SoftwareID { get; set; }
 
-        // A required field for the title of the software
-        [Required]
-        [Display(Name = "Software Title")]
-        public string Name { get; set; } = string.Empty;
+        public override string DbTagPrefix => "STW";
 
         // A required field for the specific version of the software that is installed.
         [Required]

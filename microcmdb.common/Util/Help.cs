@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Utility class to provide methods for displaying help information in the microCMDB CLI.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

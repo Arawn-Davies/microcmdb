@@ -1,4 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Model class to represent Hosts in the microCMDB backend.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
 {
@@ -8,12 +18,10 @@ namespace microcmdb.common.Models
         [Display(Name = "Host ID")]
         public int HostID { get; set; }
 
-        [Required]
-        [Display(Name = "Hostname")]
-        public string Name { get; set; } = string.Empty;
+        // Host entity tag prefix
+        public override string DbTagPrefix => "HST";
 
         // An optional field for the IP address of the node, if applicable
-        [Display(Name = "IP Address")]
         public string? IPaddr { get; set; }
 
         public NodeHostMapping? NodeHostMapping { get; set; }

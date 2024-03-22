@@ -1,4 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Model class to represent NetworkUsers in the microCMDB backend.
+
+using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
 {
@@ -7,6 +17,8 @@ namespace microcmdb.common.Models
         [Key]
         [Display(Name = "User ID")]
         public int NetworkUserID { get; set; }
+
+        public override string DbTagPrefix => "USR";
 
         [Required]
         [Display(Name = "User Name")]

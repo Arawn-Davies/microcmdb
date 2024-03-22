@@ -1,4 +1,14 @@
-﻿using System;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Utility class to provide methods for retrieving entities from the microCMDB backend.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +26,7 @@ namespace microcmdb.common.Util
             foreach (var item in Db.CurrentDbContext.ConfigItems)
             {
                 Console.WriteLine("=================================================");
-                Console.WriteLine("ID: " + item.ConfigItemID);
+                Console.WriteLine("ID: " + item.DbTag);
                 Console.WriteLine("Name: " + item.Name);
                 Console.WriteLine("Purchase date: " + item.PurchaseDate);
                 Console.WriteLine("Deployment location: " + item.DeployLoc);

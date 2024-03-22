@@ -1,4 +1,15 @@
-﻿using System;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : This file is the database context for the application. It contains the collections of entities that are used to store data in the application.
+// It also contains the SeedDatabase method which is used to populate the database with example data.
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
