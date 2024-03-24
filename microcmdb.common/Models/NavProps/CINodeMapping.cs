@@ -9,8 +9,14 @@
 // Purpose : Model class to represent ConfigItem/Node mappings in the microCMDB backend.
 namespace microcmdb.common.Models
 {
-    public class CINodeMapping
+    public class CINodeMapping : Entity
     {
+        public override string DbTagPrefix => "CIN";
+        public CINodeMapping() : base() 
+        {
+            Db.CurrentDbContext.CINodeMappings.Add(this);
+        }
+
         public ConfigItem ConfigItem { get; set; }
         public Node Node { get; set; }
         public int ConfigItemID { get; set; }

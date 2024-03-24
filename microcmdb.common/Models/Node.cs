@@ -14,10 +14,18 @@ namespace microcmdb.common.Models
 {
     public class Node : Entity
     {
-        // A unique identifier for the node
-        [Key]
-        [Display(Name = "Node ID")]
-        public int NodeID { get; set; }
+        public Node() : base()
+        {
+            if (CINodeMapping != null)
+            {
+                ConfigItemID = CINodeMapping.ConfigItemID;
+            }
+            else
+            {
+                ConfigItemID = null;
+            }
+            Db.CurrentDbContext.Nodes.Add(this);
+        }
 
         public override string DbTagPrefix => "NOD";
 
@@ -50,5 +58,15 @@ namespace microcmdb.common.Models
         public ICollection<SoftwareInstallation> InstalledSoftware { get; set; } = new List<SoftwareInstallation>();
 
         public ICollection<NetworkUserMapping>? NetworkUsers { get; set; }
+
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine("OS Version:\t" + OS_Version);
+            Console.WriteLine("CPU Architecture:\t" + CPU_Arch);
+            if (RAM != null || RAM != 0) { Console.WriteLine("RAM:\t\t" + RAM); } else { Console.WriteLine("RAM:\t\tN/A"); }
+            if (Storage != null || Storage != 0) { Console.WriteLine("Storage:\t" + Storage); } else { Console.WriteLine("Storage:\tN/A"); }
+            Console.WriteLine("=================================================");
+        }
     }
 }

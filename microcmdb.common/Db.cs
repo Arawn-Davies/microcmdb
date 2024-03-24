@@ -22,6 +22,8 @@ namespace microcmdb.common
     {
         public static Db CurrentDbContext;
 
+        public ICollection<Entity> Entities {  get; set; }
+
         public ICollection<ConfigItem> ConfigItems { get; set; }
         
         public ICollection<Node> Nodes { get; set; }
@@ -46,6 +48,7 @@ namespace microcmdb.common
 
         public Db()
         {
+            Entities = new List<Entity>();
             ConfigItems = new List<ConfigItem>();
             Nodes = new List<Node>();
             Hosts = new List<Host>();
@@ -69,11 +72,11 @@ namespace microcmdb.common
                 DateTime TenYearsAgo = DateTime.Now.AddYears(-10);
 
                 // Create ConfigItems
-                var cA500 = new ConfigItem { Name = "Amiga 500", PurchaseDate = example, DeployLoc = "Home" };
-                var cA6128 = new ConfigItem { Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Home" };
-                var cNAS1 = new ConfigItem { Name = "16TB Intel Atom NAS", PurchaseDate = TenYearsAgo, DeployLoc = "Garage" };
-                var cNAS2 = new ConfigItem { Name = "Ubuntu Server NAS", PurchaseDate = DateTime.Now, DeployLoc = "Office" };
-                var cRPI = new ConfigItem { Name = "Raspberry Pi 4", PurchaseDate = LastYear, DeployLoc = "Home" };
+                var cA500 = new ConfigItem { Name = "Amiga 500", PurchaseDate = example, DeployLoc = "Home", Description = "Amiga 500 Rev 5a with 68030 CPU and RAM upgrade", };
+                var cA6128 = new ConfigItem { Name = "Amstrad CPC 6128", PurchaseDate = DateTime.Now, DeployLoc = "Home", Description = "Amstrad CPC 6128 with Gotek floppy emulator" };
+                var cNAS1 = new ConfigItem { Name = "16TB Intel Atom NAS", PurchaseDate = TenYearsAgo, DeployLoc = "Garage", Description = "Synology DS214play NAS 8TB with 2x 4TB USB 3.2 HDD (16TB)"};
+                var cNAS2 = new ConfigItem { Name = "Ubuntu Server NAS", PurchaseDate = DateTime.Now, DeployLoc = "Office", Description = "Dell Optiplex 3020 with external 16TB HDD RAID array"};
+                var cRPI = new ConfigItem { Name = "Raspberry Pi 4", PurchaseDate = LastYear, DeployLoc = "Home", Description = "Raspberry pi 4 4GB with 32GB microSDHC storage"};
 
                 
 
@@ -85,8 +88,8 @@ namespace microcmdb.common
 
 
                 // Create Hosts                
-                var hNAS1 = new Host { Name = "HOMENAS" };
-                var hNAS2 = new Host { Name = "SHEDNAS" };
+                var hNAS1 = new Host { Name = "HOMENAS", IPaddr = "192.168.2.100"};
+                var hNAS2 = new Host { Name = "SHEDNAS", IPaddr = "192.168.2.200" };
 
 
                 // Create Network Users
@@ -98,9 +101,9 @@ namespace microcmdb.common
                 var AWB = new Software { Name = "Amiga Workbench", Version = "3.1" };
 
                 // Create Services
-                var svcHTTP = new Service { Protocol = "HTTP", PortNum = 80};
-                var svcFTP= new Service { Protocol = "FTP", PortNum = 21 };
-                var svcSSH = new Service { Protocol = "SSH", PortNum = 22 };    
+                var svcHTTP = new Service { Name =  "Local web site", PortNum = 80 };
+                var svcFTP = new Service { Name = "Synology FTP", PortNum = 21 };
+                var svcSSH = new Service { Name = "Ubuntu SSH", PortNum = 22 };
 
 
                 // Create initial CINMs
@@ -127,57 +130,16 @@ namespace microcmdb.common
                 // Create initial SIs
                 var SI1 = new SoftwareInstallation { Node = nNAS1, Software = DSM };
                 var SI2 = new SoftwareInstallation { Node = nA500, Software = AWB };
-                nNAS1.InstalledSoftware.Add(SI1);
-                nA500.InstalledSoftware.Add(SI2);
 
 
                 // Create initial HSMs
                 var HSM1 = new HostServiceMapping { Host = hNAS1, Service = svcFTP };
                 var HSM2 = new HostServiceMapping { Host = hNAS2, Service = svcHTTP };
-                var HSM3 = new HostServiceMapping { Host = hNAS2, Service = svcSSH };
+                var HSM3 = new HostServiceMapping { Host = hNAS2, Service = new Service { Name = svcSSH.Name, PortNum = svcSSH.PortNum } };
+                svcFTP.HostServiceMapping = HSM1;
+                svcHTTP.HostServiceMapping = HSM2;
+                svcSSH.HostServiceMapping = HSM3;
 
-
-
-                // Add new entities to database
-                ConfigItems.Add(cA500);
-                ConfigItems.Add(cA6128);
-                ConfigItems.Add(cNAS1);
-                ConfigItems.Add(cNAS2);
-
-                Nodes.Add(nA500);
-                Nodes.Add(nA6128);
-                Nodes.Add(nNAS1);
-                Nodes.Add(nNAS2);
-                Hosts.Add(hNAS1);
-                Hosts.Add(hNAS2);
-
-                NetworkUsers.Add(networkUser);
-                NetworkUsers.Add(networkUser2);
-
-                Software.Add(DSM);
-                Software.Add(AWB);
-
-                Services.Add(svcSSH);
-                Services.Add(svcFTP);
-                Services.Add(svcHTTP);
-
-                CINodeMappings.Add(cA500Mapping);
-                CINodeMappings.Add(cA6128Mapping);
-                CINodeMappings.Add(cNASMapping1);
-                CINodeMappings.Add(cNASMapping2);
-
-                NodeHostMappings.Add(NHM1);
-                NodeHostMappings.Add(NHM2);
-
-                SoftwareInstallations.Add(SI1);
-                SoftwareInstallations.Add(SI2);
-
-                HostServiceMappings.Add(HSM1);
-                HostServiceMappings.Add(HSM2);
-                HostServiceMappings.Add(HSM3);
-
-                NetworkUserMappings.Add(NUM1);
-                NetworkUserMappings.Add(NUM2);
             }
         }
     }

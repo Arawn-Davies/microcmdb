@@ -14,10 +14,10 @@ namespace microcmdb.common.Models
 {
     public class Software : Entity
     {
-        // A unique identifier for the software
-        [Key]
-        [Display(Name = "Software ID")]
-        public int SoftwareID { get; set; }
+        public Software() : base()
+        {
+            Db.CurrentDbContext.Software.Add(this);
+        }
 
         public override string DbTagPrefix => "STW";
 
@@ -36,5 +36,19 @@ namespace microcmdb.common.Models
 
         [Display(Name = "Installed On")]
         public ICollection<SoftwareInstallation> Installations { get; set; } = new List<SoftwareInstallation>();
+
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine("Version:\t" + Version);
+            Console.WriteLine("Developer:\t" + Developer);
+            Console.WriteLine("License Type:\t" + LicenseType);
+            Console.WriteLine("Installed On:");
+            foreach (var installation in Installations)
+            {
+                Console.WriteLine(installation.Node.Name);
+            }
+            Console.WriteLine("=================================================");
+        }
     }
 }

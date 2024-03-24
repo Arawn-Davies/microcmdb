@@ -10,8 +10,15 @@
 
 namespace microcmdb.common.Models
 {
-    public class NetworkUserMapping
+    public class NetworkUserMapping : Entity
     {
+        public override string DbTagPrefix => "NUM";
+
+        public NetworkUserMapping() : base()
+        {
+            Db.CurrentDbContext.NetworkUserMappings.Add(this);
+        }
+
         public Node Node { get; set; }
         public NetworkUser NetworkUser { get; set; }
         public int NodeID { get; set; }

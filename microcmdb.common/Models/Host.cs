@@ -14,9 +14,10 @@ namespace microcmdb.common.Models
 {
     public class Host : Entity
     {
-        [Key]
-        [Display(Name = "Host ID")]
-        public int HostID { get; set; }
+        public Host() : base()
+        {
+            Db.CurrentDbContext.Hosts.Add(this);
+        }
 
         // Host entity tag prefix
         public override string DbTagPrefix => "HST";
@@ -27,5 +28,17 @@ namespace microcmdb.common.Models
         public NodeHostMapping? NodeHostMapping { get; set; }
 
         public ICollection<HostServiceMapping> Services { get; set; } = new List<HostServiceMapping>();
+
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine("IP Address:\t" + IPaddr);
+            Console.WriteLine("Services:");
+            foreach (var service in Services)
+            {
+                PrintInfo();
+            }
+            Console.WriteLine("=================================================");
+        }
     }
 }

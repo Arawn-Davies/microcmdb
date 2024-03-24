@@ -49,6 +49,9 @@ namespace microcmdb.common
                         case "":
                             // If the input is empty, skip the rest of the loop
                             break;
+                        case "cls": case "clear":
+                            Console.Clear();
+                            break;
                         case "help":
                             switch (args)
                             {
@@ -127,7 +130,9 @@ namespace microcmdb.common
                                     break;
                             }
                             break;
-
+                        case "sget":
+                            Util.Get.SpecificGet(args);
+                            break;
                         case "ver":
                             Console.WriteLine("microCMDB CLI v1.0");
                             break;

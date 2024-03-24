@@ -14,9 +14,10 @@ namespace microcmdb.common.Models
 {
     public class NetworkUser : Entity
     {
-        [Key]
-        [Display(Name = "User ID")]
-        public int NetworkUserID { get; set; }
+        public NetworkUser() : base()
+        {
+            Db.CurrentDbContext.NetworkUsers.Add(this);
+        }
 
         public override string DbTagPrefix => "USR";
 
@@ -34,6 +35,16 @@ namespace microcmdb.common.Models
         public string? Lastname { get; set; }
 
         public ICollection<NetworkUserMapping> AllowedNodes { get; set; }
+
+        public override void PrintInfo()
+        {
+            base.PrintInfo();
+            Console.WriteLine("Username:\t" + Username);
+            Console.WriteLine("Email:\t" + Email);
+            Console.WriteLine("First Name:\t" + Firstname);
+            Console.WriteLine("Last Name:\t" + Lastname);
+            Console.WriteLine("=================================================");
+        }
 
     }
 }

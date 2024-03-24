@@ -18,11 +18,13 @@ namespace microcmdb.common.Models
 {
     public abstract class Entity
     {
+        public static string[] Prefixes = { "CFG", "STW", "SVC", "NOD", "HST" };
+        public int Id { get; set; }
         // Abstract property to be implemented by derived classes, providing a unique prefix for the entity type
         public abstract string DbTagPrefix { get; }
 
         // The name of the entity
-        public string Name { get; set; } = string.Empty;
+        public virtual string Name { get; set; } = string.Empty;
 
         // A unique identifier for the entity, generated based on the DbTagPrefix and a counter
         public string DbTag { get; set; } = string.Empty;
@@ -36,7 +38,7 @@ namespace microcmdb.common.Models
         private static Dictionary<string, int> DbEntityCounter = new Dictionary<string, int>();
 
         // Constructor for all microCMDB entities 
-        protected Entity()
+        public Entity()
         {
             // If the dictionary does not contain the key, add it and set the initial value to zero.
 
@@ -47,9 +49,22 @@ namespace microcmdb.common.Models
 
             // Generate the unique identifier for the entity based on the prefix and the counter
             int nextId = DbEntityCounter[DbTagPrefix]++;
-
+            Id = nextId;
             // Set the DbTag property to the generated identifier, formatted with leading zeros
-            DbTag = DbTagPrefix + nextId.ToString("D4");
+            DbTag = DbTagPrefix + Id.ToString("D4");
+            
+            
+            Db.CurrentDbContext.Entities.Add(this);
+        }
+
+        public virtual void PrintInfo()
+        {
+            Console.WriteLine("=================================================");
+            Console.WriteLine("ID:\t\t" + DbTag);
+            Console.WriteLine("Name:\t\t" + Name);
+            Console.WriteLine("Notes:\t\t" + Description);
+            Console.WriteLine("Last updated:\t" + ModifiedDate);
+            Console.WriteLine("Created:\t" + CreatedDate);
         }
 
     }

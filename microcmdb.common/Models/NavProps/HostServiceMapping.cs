@@ -9,11 +9,21 @@
 // Purpose : Model class to represent Host/Service mappings in the microCMDB backend.
 namespace microcmdb.common.Models
 {
-    public class HostServiceMapping
+    public class HostServiceMapping : Entity
     {
-        public Host Host { get; set; }
-        public Service Service { get; set; }
+        public override string DbTagPrefix => "HSM";
+
+        public HostServiceMapping() : base()
+        {
+            Db.CurrentDbContext.HostServiceMappings.Add(this);
+        }
+
+        public Host? Host { get; set; }
+        
+        public Service? Service { get; set; }
+        
         public int HostID { get; set; }
+        
         public int ServiceID { get; set; }
     }
 }

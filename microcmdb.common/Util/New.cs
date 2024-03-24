@@ -22,9 +22,41 @@ namespace microcmdb.common.Util
 
         public static void NewConfigItem()
         {
-            // Placeholder implementation to create a new ConfigItem
+            
             Console.WriteLine("Creating a new ConfigItem...");
-            // Replace this with actual logic to create a new ConfigItem in the CMDB backend
+
+
+            Console.WriteLine("Enter the name:");
+            string? _name = Console.ReadLine();
+            Console.WriteLine("Enter the purchase date:");
+            string? _purchasedStr = Console.ReadLine();
+            DateTime _purchasedDT = DateTime.Now;
+            while (!DateTime.TryParseExact(_purchasedStr, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out _purchasedDT))
+            {
+                Console.WriteLine("Invalid date. Use format DD/MM/YYYY - Please retry.");
+                _purchasedStr = Console.ReadLine();
+            }
+            Console.WriteLine("Enter when last updated:");
+            DateTime _updatedDT = DateTime.Now;
+            Console.WriteLine("Enter any notes:");
+            string? _notes = Console.ReadLine();
+            Console.WriteLine("Enter the deployment location:");
+            string? _deployLoc = Console.ReadLine();
+
+            Models.ConfigItem CI = new Models.ConfigItem
+            {
+                Name = _name,
+                PurchaseDate = _purchasedDT,
+                ModifiedDate = _updatedDT,
+                Description = _notes,
+                DeployLoc = _deployLoc
+            };
+
+            Db.CurrentDbContext.ConfigItems.Add(CI);
+
+            CI.PrintInfo();
+
+                
         }
 
         public static void NewNode()

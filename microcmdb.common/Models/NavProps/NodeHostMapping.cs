@@ -10,8 +10,14 @@
 
 namespace microcmdb.common.Models
 {
-    public class NodeHostMapping
+    public class NodeHostMapping : Entity
     {
+        public override string DbTagPrefix => "NHM";
+
+        public NodeHostMapping() : base() 
+        {
+            Db.CurrentDbContext.NodeHostMappings.Add(this);
+        }
         public Node Node { get; set; }
         public Host Host { get; set; }
         public int NodeID { get; set; }
