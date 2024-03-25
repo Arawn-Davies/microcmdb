@@ -31,10 +31,16 @@ namespace microcmdb.common
                 Console.Write("> ");
 
 
-                string input = Console.ReadLine()?.ToLower();
+                string? input = Console.ReadLine()?.ToLower();
 
 
                 // Split the input into command and arguments
+
+                if (input == null)
+                {
+                    Console.WriteLine("Invalid command. Type 'help' for available commands.");
+                    continue;
+                }
 
                 string[] parts = input.Split(' ', 2);
                 if (parts.Length > 0)
@@ -165,6 +171,9 @@ namespace microcmdb.common
                         case "exit":
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");
                             return;
+                        case "example":
+                            Util.Table.Example();
+                            break;
                         default:
                             Console.WriteLine("Invalid command. Type 'help' for available commands.");
                             break;

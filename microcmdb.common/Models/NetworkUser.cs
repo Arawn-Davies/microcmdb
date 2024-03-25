@@ -43,7 +43,6 @@ namespace microcmdb.common.Models
             Console.WriteLine("Email:\t" + Email);
             Console.WriteLine("First Name:\t" + Firstname);
             Console.WriteLine("Last Name:\t" + Lastname);
-            Console.WriteLine("=================================================");
         }
 
     }

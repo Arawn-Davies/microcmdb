@@ -99,6 +99,15 @@ namespace microcmdb.common
                 // Create Software
                 var DSM = new Software { Name = "Synology DiskStation Manager", Version = "7.1" };
                 var AWB = new Software { Name = "Amiga Workbench", Version = "3.1" };
+                var steamLauncher = new Software { Name = "Steam", Version = "Latest", Developer = "Valve", LicenseType = "Proprietary", Description = "Steam Games Launcher" };
+
+                SoftwareInstallation sDSM = new SoftwareInstallation { Node = nNAS1, Software = DSM };
+                SoftwareInstallation sAWB = new SoftwareInstallation { Node = nA500, Software = AWB };
+
+                nNAS1.InstalledSoftware.Add(sDSM);
+                DSM.Installations.Add(sDSM);
+                nA500.InstalledSoftware.Add(sAWB);
+                AWB.Installations.Add(sAWB);
 
                 // Create Services
                 var svcHTTP = new Service { Name =  "Local web site", PortNum = 80 };

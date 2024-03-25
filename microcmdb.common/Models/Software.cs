@@ -8,6 +8,7 @@
 
 // Purpose: Model class to represent Software in the microCMDB backend.
 
+using microcmdb.common.Util;
 using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
@@ -40,15 +41,16 @@ namespace microcmdb.common.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("Version:\t" + Version);
-            Console.WriteLine("Developer:\t" + Developer);
-            Console.WriteLine("License Type:\t" + LicenseType);
-            Console.WriteLine("Installed On:");
+            Table.PrintRow("Version:", Version);
+            if (!String.IsNullOrEmpty(Developer)) { Table.PrintRow("Developer:", Developer); }
+            if (!String.IsNullOrEmpty(LicenseType)) { Table.PrintRow("License Type:", LicenseType); }
+            Table.PrintLine();
+            Table.PrintRow("Installed On:");
             foreach (var installation in Installations)
             {
-                Console.WriteLine(installation.Node.Name);
+                Table.PrintRow("Node entity:", installation.Node.DbTag);
+                Table.PrintRow("Node name:", installation.Node.Name); 
             }
-            Console.WriteLine("=================================================");
         }
     }
 }

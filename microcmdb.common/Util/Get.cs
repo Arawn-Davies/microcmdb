@@ -21,6 +21,7 @@ namespace microcmdb.common.Util
     {
         public static void SpecificGet(string _tag)
         {
+            Table.PrintLine();
             // Sort through the collections and compare the DbTag prefix and compare it to the first three letters of the method parameter.
             // If the prefix matches, call the PrintInfo method on the specific object
             foreach (ConfigItem configItem in Db.CurrentDbContext.ConfigItems)
@@ -82,54 +83,66 @@ namespace microcmdb.common.Util
                 Console.WriteLine("No entity found with the tag: " + _tag);
                 Console.WriteLine("Please enter a valid database entry.");
             }
+            Table.PrintLine();
         }
 
         public static void GetConfigItems()
         {
+            Table.PrintLine();
             foreach (var item in Db.CurrentDbContext.ConfigItems)
             {
                 item.PrintInfo();
+                Table.PrintLine();
             }
         }
 
         public static void GetNodes()
         {
+            Table.PrintLine();
             foreach (var node in Db.CurrentDbContext.Nodes)
             {
                 node.PrintInfo();
+                Table.PrintLine();
             }
         }
 
         public static void GetHosts()
         {
+            Table.PrintLine();
             foreach (var host in Db.CurrentDbContext.Hosts)
             {
                 host.PrintInfo();
+                Table.PrintLine();
             }
         }
 
         public static void GetServices()
         {
-            Console.WriteLine("Retrieving Services...");
+            Table.PrintLine();
             foreach (var service in Db.CurrentDbContext.Services)
             {
                 service.PrintInfo();
+                Table.PrintLine();
             }
         }
 
         public static void GetSoftware()
         {
+            Table.PrintLine();
             foreach (var software in Db.CurrentDbContext.Software)
             {
                 software.PrintInfo();
+                Table.PrintLine();
             }
         }
 
         public static void GetNetworkUsers()
         {
+            Table.PrintLine();
             foreach (var networkUser in Db.CurrentDbContext.NetworkUsers)
             {
                 networkUser.PrintInfo();
+                Table.PrintLine();
             }
         }
     }

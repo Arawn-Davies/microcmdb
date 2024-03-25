@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using microcmdb.common.Util;
 
 namespace microcmdb.common.Models
 {
@@ -59,12 +60,12 @@ namespace microcmdb.common.Models
 
         public virtual void PrintInfo()
         {
-            Console.WriteLine("=================================================");
-            Console.WriteLine("ID:\t\t" + DbTag);
-            Console.WriteLine("Name:\t\t" + Name);
-            Console.WriteLine("Notes:\t\t" + Description);
-            Console.WriteLine("Last updated:\t" + ModifiedDate);
-            Console.WriteLine("Created:\t" + CreatedDate);
+            Table.PrintRow("ID", DbTag);
+            Table.PrintRow("Name", "");
+            Table.PrintRow("Notes", "");
+            Table.PrintRow("Last updated", ModifiedDate.ToString());
+            Table.PrintRow("Created", CreatedDate.ToString());
+            
         }
 
     }

@@ -32,13 +32,12 @@ namespace microcmdb.common.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("IP Address:\t" + IPaddr);
-            Console.WriteLine("Services:");
+            Console.WriteLine("IP Address:\t\t" + IPaddr);
+            Console.Write("Services:\t\t");
             foreach (var service in Services)
             {
                 PrintInfo();
             }
-            Console.WriteLine("=================================================");
         }
     }
 }

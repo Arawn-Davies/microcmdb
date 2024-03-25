@@ -8,6 +8,7 @@
 
 // Purpose : Model class for ConfigItem objects. Inherits from Entity class.
 
+using microcmdb.common.Util;
 using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
@@ -44,9 +45,8 @@ namespace microcmdb.common.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("Purchase date:\t" + PurchaseDate);
-            Console.WriteLine("Deployed:\t" + DeployLoc);
-            Console.WriteLine("=================================================");
+            Table.PrintRow("Purchase date:", PurchaseDate.ToString());
+            Table.PrintRow("Deployed:", DeployLoc);
         }
 
     }

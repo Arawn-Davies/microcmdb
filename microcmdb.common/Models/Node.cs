@@ -8,6 +8,7 @@
 
 // Purpose: Model class to represent Nodes in the microCMDB backend.
 
+using microcmdb.common.Util;
 using System.ComponentModel.DataAnnotations;
 
 namespace microcmdb.common.Models
@@ -62,11 +63,21 @@ namespace microcmdb.common.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("OS Version:\t" + OS_Version);
-            Console.WriteLine("CPU Architecture:\t" + CPU_Arch);
-            if (RAM != null || RAM != 0) { Console.WriteLine("RAM:\t\t" + RAM); } else { Console.WriteLine("RAM:\t\tN/A"); }
-            if (Storage != null || Storage != 0) { Console.WriteLine("Storage:\t" + Storage); } else { Console.WriteLine("Storage:\tN/A"); }
-            Console.WriteLine("=================================================");
+            Table.PrintRow("OS Version:", OS_Version);
+            Table.PrintRow("CPU Architecture:", CPU_Arch);
+            if (RAM != null || RAM != 0) { Table.PrintRow("RAM", RAM.ToString()); } else { Table.PrintRow("RAM", "N/A"); }
+            if (Storage != null || Storage != 0) { Table.PrintRow("Storage:", Storage.ToString()); } else { Table.PrintRow("Storage", "N/A"); }
+        }
+
+        public void PrintSoftware()
+        {
+            Table.PrintLine();
+            Table.PrintRow("Installed Software:");
+            foreach (var software in InstalledSoftware)
+            {
+                software.PrintInfo();
+            }
+            Table.PrintLine();
         }
     }
 }

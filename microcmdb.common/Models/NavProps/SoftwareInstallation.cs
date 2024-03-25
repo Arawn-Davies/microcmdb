@@ -29,7 +29,6 @@ namespace microcmdb.common.Models
             base.PrintInfo();
             Console.WriteLine("Node:\t" + Node.Name);
             Console.WriteLine("Software:\t" + Software.Name);
-            Console.WriteLine("=================================================");
         }
     }
 }

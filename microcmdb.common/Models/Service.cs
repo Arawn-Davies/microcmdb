@@ -88,11 +88,9 @@ namespace microcmdb.common.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("ID:\t\t" + DbTag);
-            Console.WriteLine("Port:\t\t" + PortNum);
-            Console.WriteLine("Protocol:\t" + Protocol);
-            Console.WriteLine("URL:\t\t" + URL());
-            Console.WriteLine("=================================================");
+            Console.WriteLine("Port:\t\t\t" + PortNum);
+            Console.WriteLine("Protocol:\t\t" + Protocol);
+            Console.WriteLine("URL:\t\t\t" + URL());
         }
         
     }
