@@ -8,6 +8,8 @@
 
 // This file contains the main entry point for the microCMDB CLI application.
 
+using microcmdb.common.Models;
+
 namespace microcmdb.common
 {
     internal class Program
@@ -73,16 +75,24 @@ namespace microcmdb.common
                             switch (args)
                             {
                                 case "configitems":
+                                case "c":
                                     Util.Get.GetConfigItems();
                                     break;
                                 case "nodes":
+                                case "n":
                                     Util.Get.GetNodes();
                                     break;
                                 case "hosts":
+                                case "h":
                                     Util.Get.GetHosts();
                                     break;
                                 case "services":
+                                case "svc":
                                     Util.Get.GetServices();
+                                    break;
+                                case "software":
+                                case "stw":
+                                    Util.Get.GetSoftware();
                                     break;
                                 default:
                                     Console.WriteLine("Invalid 'get' command. Type 'help get' for available queries.");
@@ -93,16 +103,24 @@ namespace microcmdb.common
                             switch (args)
                             {
                                 case "configitems":
+                                case "c":
                                     Util.Set.SetConfigItems();
                                     break;
                                 case "nodes":
+                                case "n":
                                     Util.Set.SetNodes();
                                     break;
                                 case "hosts":
+                                case "h":
                                     Util.Set.SetHosts();
                                     break;
                                 case "services":
+                                case "svc":
                                     Util.Set.SetServices();
+                                    break;
+                                case "software":
+                                case "stw":
+                                    Util.Set.SetSoftware();
                                     break;
                                 default:
                                     Console.WriteLine("Invalid 'set' command. Type 'help set' for available queries.");
@@ -114,16 +132,24 @@ namespace microcmdb.common
                             switch (args)
                             {
                                 case "configitem":
+                                case "c":
                                     Util.New.NewConfigItem();
                                     break;
                                 case "node":
+                                case "n":
                                     Util.New.NewNode();
                                     break;
                                 case "host":
+                                case "h":
                                     Util.New.NewHost();
                                     break;
                                 case "service":
+                                case "svc":
                                     Util.New.NewService();
+                                    break;
+                                case "software":
+                                case "stw":
+                                    Util.New.NewSoftware();
                                     break;
                                 default:
                                     Console.WriteLine("Invalid 'new' command. Type 'help new' for available queries.");

@@ -68,13 +68,19 @@ namespace microcmdb.common.Util
                 }
             }
 
+            bool found = false;
             // If the tag does not match any of the prefixes found in Entity.EntityTypes, print an error message.
             foreach (string s in Entity.Prefixes)
             {
-                if (!_tag.ToLower().StartsWith(s.ToLower()))
+                if (_tag.ToLower().StartsWith(s.ToLower()))
                 {
-                    Console.WriteLine("Invalid database tag. Please enter a valid one.");
+                    found = true;
                 }
+            }
+            if (!found)
+            {
+                Console.WriteLine("No entity found with the tag: " + _tag);
+                Console.WriteLine("Please enter a valid database entry.");
             }
         }
 
