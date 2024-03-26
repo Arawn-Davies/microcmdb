@@ -7,7 +7,7 @@
  */
 
 // Purpose : Model class to represent ConfigItem/Node mappings in the microCMDB backend.
-namespace microcmdb.common.Models
+namespace microCMDB.common.Models
 {
     public class CINodeMapping : Entity
     {

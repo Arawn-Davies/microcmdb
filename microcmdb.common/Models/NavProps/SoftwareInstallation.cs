@@ -10,7 +10,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace microcmdb.common.Models
+namespace microCMDB.common.Models
 {
     public class SoftwareInstallation : Entity
     {

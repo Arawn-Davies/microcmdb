@@ -8,10 +8,10 @@
 
 // Purpose : Model class for ConfigItem objects. Inherits from Entity class.
 
-using microcmdb.common.Util;
+using microCMDB.common.Util;
 using System.ComponentModel.DataAnnotations;
 
-namespace microcmdb.common.Models
+namespace microCMDB.common.Models
 {
     public class ConfigItem : Entity
     {

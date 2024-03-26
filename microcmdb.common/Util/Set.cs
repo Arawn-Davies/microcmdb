@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace microcmdb.common.Util
+namespace microCMDB.common.Util
 {
     internal class Set
     {

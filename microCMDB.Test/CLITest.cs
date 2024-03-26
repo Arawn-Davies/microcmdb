@@ -1,5 +1,5 @@
-using microcmdb.common;
-using microcmdb.common.Models;
+using microCMDB.common;
+using microCMDB.common.Models;
 
 namespace microCMDB.Test
 {

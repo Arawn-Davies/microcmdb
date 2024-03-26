@@ -12,7 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
 
-namespace microcmdb.common.Models
+namespace microCMDB.common.Models
 {
     public class Service : Entity
     {

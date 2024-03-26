@@ -8,9 +8,9 @@
 
 // This file contains the main entry point for the microCMDB CLI application.
 
-using microcmdb.common.Models;
+using microCMDB.common.Models;
 
-namespace microcmdb.common
+namespace microCMDB.common
 {
     internal class Program
     {
