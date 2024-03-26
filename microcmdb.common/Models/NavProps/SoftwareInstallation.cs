@@ -30,5 +30,11 @@ namespace microcmdb.common.Models
             Console.WriteLine("Node:\t" + Node.Name);
             Console.WriteLine("Software:\t" + Software.Name);
         }
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the SoftwareInstallation object containing every property
+            return $"SoftwareInstallation,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{SoftwareID}";
+        }
     }
 }

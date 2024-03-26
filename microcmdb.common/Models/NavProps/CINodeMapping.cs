@@ -22,5 +22,12 @@ namespace microcmdb.common.Models
         public int ConfigItemID { get; set; }
         public int NodeID { get; set; }
 
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the CINodeMapping object containing every property
+            return $"CINodeMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{ConfigItemID},{NodeID}";
+        }
+
     }
 }

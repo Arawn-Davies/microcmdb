@@ -45,5 +45,11 @@ namespace microcmdb.common.Models
             Console.WriteLine("Last Name:\t" + Lastname);
         }
 
+        public override string ExportObject()
+        {
+            // Return a string representation of the NetworkUser object containing every property
+            return $"NetworkUser,{Id},{DbTag},{Username},{Email},{Firstname},{Lastname}";
+        }
+
     }
 }

@@ -49,5 +49,11 @@ namespace microcmdb.common.Models
             Table.PrintRow("Deployed:", DeployLoc);
         }
 
+        public override string ExportObject()
+        {
+            // Return a string representation of the ConfigItem object containing every property
+            return $"ConfigItem,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PurchaseDate},{DeployLoc}";
+        }
+
     }
 }

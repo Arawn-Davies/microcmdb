@@ -92,6 +92,11 @@ namespace microcmdb.common.Models
             Console.WriteLine("Protocol:\t\t" + Protocol);
             Console.WriteLine("URL:\t\t\t" + URL());
         }
-        
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the Service object containing every property
+            return $"Service,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PortNum},{Protocol},{HostId}";
+        }
     }
 }

@@ -145,5 +145,115 @@ namespace microcmdb.common.Util
                 Table.PrintLine();
             }
         }
+
+        public static void GetCINodeMappings()
+        {
+            Table.PrintLine();
+            foreach (var ciNodeMapping in Db.CurrentDbContext.CINodeMappings)
+            {
+                ciNodeMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        public static void GetNodeHostMappings()
+        {
+            Table.PrintLine();
+            foreach (var nodeHostMapping in Db.CurrentDbContext.NodeHostMappings)
+            {
+                nodeHostMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        public static void GetHostServiceMappings()
+        {
+            Table.PrintLine();
+            foreach (var hostServiceMapping in Db.CurrentDbContext.HostServiceMappings)
+            {
+                hostServiceMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        public static void GetSoftwareInstallations()
+        {
+            Table.PrintLine();
+            foreach (var softwareInstallation in Db.CurrentDbContext.SoftwareInstallations)
+            {
+                softwareInstallation.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        public static void GetNetworkUserMappings()
+        {
+            Table.PrintLine();
+            foreach (var networkUserMapping in Db.CurrentDbContext.NetworkUserMappings)
+            {
+                networkUserMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Export all of the ICollection properties to a CSV file
+        public static void Export()
+        {
+            List<string> EntityCSV = new List<string>();
+            List<string> MapCSV = new List<string>();
+
+            #region Entity-specific CSV
+            foreach (ConfigItem ci in Db.CurrentDbContext.ConfigItems)
+            {
+                EntityCSV.Add(ci.ExportObject());
+            }
+            foreach (Node node in Db.CurrentDbContext.Nodes)
+            {
+                EntityCSV.Add(node.ExportObject());
+            }
+            foreach (Host host in Db.CurrentDbContext.Hosts)
+            {
+                EntityCSV.Add(host.ExportObject());
+            }
+            foreach (Service service in Db.CurrentDbContext.Services)
+            {
+                EntityCSV.Add(service.ExportObject());
+            }
+            foreach (Software software in Db.CurrentDbContext.Software)
+            {
+                EntityCSV.Add(software.ExportObject());
+            }
+            foreach (NetworkUser networkUser in Db.CurrentDbContext.NetworkUsers)
+            {
+                EntityCSV.Add(networkUser.ExportObject());
+            }
+            #endregion
+
+            #region Mapping-specific CSV
+            foreach (CINodeMapping ciNodeMapping in Db.CurrentDbContext.CINodeMappings)
+            {
+                MapCSV.Add(ciNodeMapping.ExportObject());
+            }
+            foreach (NodeHostMapping nodeHostMapping in Db.CurrentDbContext.NodeHostMappings)
+            {
+                MapCSV.Add(nodeHostMapping.ExportObject());
+            }
+            foreach (HostServiceMapping hostServiceMapping in Db.CurrentDbContext.HostServiceMappings)
+            {
+                MapCSV.Add(hostServiceMapping.ExportObject());
+            }
+            foreach (SoftwareInstallation softwareInstallation in Db.CurrentDbContext.SoftwareInstallations)
+            {
+                MapCSV.Add(softwareInstallation.ExportObject());
+            }
+            foreach (NetworkUserMapping networkUserMapping in Db.CurrentDbContext.NetworkUserMappings)
+            {
+                MapCSV.Add(networkUserMapping.ExportObject());
+            }
+            #endregion
+
+            File.WriteAllLines("entity.csv", EntityCSV);
+            File.WriteAllLines("mapping.csv", MapCSV);
+        }
     }
 }

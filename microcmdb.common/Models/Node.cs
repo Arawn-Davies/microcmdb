@@ -79,5 +79,11 @@ namespace microcmdb.common.Models
             }
             Table.PrintLine();
         }
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the ConfigItem object containing every property
+            return $"Node,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{OS_Version},{CPU_Arch},{RAM},{Storage},{ConfigItemID}";
+        }
     }
 }

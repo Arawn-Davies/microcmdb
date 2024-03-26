@@ -24,5 +24,11 @@ namespace microcmdb.common.Models
         public int NodeID { get; set; }
         public int NetworkUserID { get; set; }
 
+        public override string ExportObject()
+        {
+            // Return a string representation of the NetworkUserMapping object containing every property
+            return $"NetworkUserMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{NetworkUserID}";
+        }
+
     }
 }

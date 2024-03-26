@@ -25,5 +25,12 @@ namespace microcmdb.common.Models
         public int HostID { get; set; }
         
         public int ServiceID { get; set; }
+
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the HostServiceMapping object containing every property
+            return $"HostServiceMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{HostID},{ServiceID}";
+        }
     }
 }

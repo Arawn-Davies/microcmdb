@@ -61,12 +61,14 @@ namespace microcmdb.common.Models
         public virtual void PrintInfo()
         {
             Table.PrintRow("ID", DbTag);
-            Table.PrintRow("Name", "");
-            Table.PrintRow("Notes", "");
+            Table.PrintRow("Name", Name);
+            Table.PrintRow("Notes", Description);
             Table.PrintRow("Last updated", ModifiedDate.ToString());
             Table.PrintRow("Created", CreatedDate.ToString());
             
         }
+
+        public abstract string ExportObject();
 
     }
 }

@@ -39,5 +39,11 @@ namespace microcmdb.common.Models
                 PrintInfo();
             }
         }
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the Host object containing every property
+            return $"Host,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{IPaddr}";
+        }
     }
 }

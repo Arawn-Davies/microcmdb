@@ -168,12 +168,13 @@ namespace microcmdb.common
                         case "ver":
                             Console.WriteLine("microCMDB CLI v1.0");
                             break;
+                        case "export":
+                            Util.Get.Export();
+                            break;
                         case "exit":
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");
                             return;
-                        case "example":
-                            Util.Table.Example();
-                            break;
+                        
                         default:
                             Console.WriteLine("Invalid command. Type 'help' for available commands.");
                             break;

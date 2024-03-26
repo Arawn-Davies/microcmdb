@@ -44,13 +44,24 @@ namespace microcmdb.common.Models
             Table.PrintRow("Version:", Version);
             if (!String.IsNullOrEmpty(Developer)) { Table.PrintRow("Developer:", Developer); }
             if (!String.IsNullOrEmpty(LicenseType)) { Table.PrintRow("License Type:", LicenseType); }
-            Table.PrintLine();
-            Table.PrintRow("Installed On:");
-            foreach (var installation in Installations)
+            
+            if (Installations.Count > 0)
             {
-                Table.PrintRow("Node entity:", installation.Node.DbTag);
-                Table.PrintRow("Node name:", installation.Node.Name); 
+                Table.PrintLine();
+                Table.PrintRow("Installed On:");
+                Table.PrintRow("Entity tag:", "Name:");
+                foreach (var installation in Installations)
+                {
+                    Table.PrintRow(installation.Node.DbTag, installation.Node.Name);
+                }
             }
+            
+        }
+
+        public override string ExportObject()
+        {
+            // Return a string representation of the Software object containing every property
+            return $"Software,{Id},{DbTag},{Name},{Version},{Developer},{LicenseType}";
         }
     }
 }
