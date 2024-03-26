@@ -18,9 +18,9 @@ using microcmdb.common.Models;
 
 namespace microcmdb.common
 {
-    internal class Db
+    public class Db
     {
-        public static Db CurrentDbContext;
+        public static Db? CurrentDbContext { get; set; }
 
         public ICollection<Entity> Entities {  get; set; }
 
