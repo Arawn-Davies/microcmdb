@@ -1,10 +1,42 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
+	<ItemGroup>
+		<FileWrites Include="Util\BuildInfo.cs" />
+	</ItemGroup>
+	
+	<PropertyGroup>
+		<Year>$([System.DateTime]::Now.ToString("yyyy"))</Year>
+		<Month>$([System.DateTime]::Now.ToString("MM"))</Month>
+		<Date>$([System.DateTime]::Now.ToString("dd"))</Date>
+		<Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
+		<GenVerCS>
+namespace microCMDB.common.Util
+{
+
+	///<summary>
+	///Class definition for microCMDB.common.Util
+	///</summary>
+    public class BuildInfo
+    {
+		///<summary>
+		///The kernel build number, generated upon a new build
+		///</summary>
+		public static string BuildNumber = "$(Date)$(Month)$(Year)$(Time)"%3b
+	}
+}
+		</GenVerCS>
+	</PropertyGroup>
+
+
+	<Target Name="GetVersion" BeforeTargets="BeforeCompile;CoreCompile" Inputs="$(MSBuildAllProjects)" Outputs="Util\BuildInfo.cs">
+		<WriteLinesToFile File="Util\BuildInfo.cs" Lines="$(GenVerCS)" Overwrite="true"></WriteLinesToFile>
+	</Target>
+	
 </Project>

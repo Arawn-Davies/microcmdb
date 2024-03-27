@@ -8,7 +8,7 @@ namespace microCMDB.common.Util
 {
     internal class Table
     {
-        static int tableWidth = 80;
+        static int tableWidth = 79;
 
         public static void Example()
         {

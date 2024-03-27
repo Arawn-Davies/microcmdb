@@ -9,12 +9,24 @@
 // This file contains the main entry point for the microCMDB CLI application.
 
 using microCMDB.common.Models;
+using microCMDB.common.Util;
 
 namespace microCMDB.common
 {
-    internal class Program
+    public class Program
     {
-        static void Main()
+        public static bool running = false;
+        private static void Main()
+        {
+            running = true;
+            while (running == true)
+            {
+                CLI();
+            }
+            running = false;
+        }
+
+        public static void CLI()
         {
             if (Db.CurrentDbContext == null)
             {
@@ -42,7 +54,7 @@ namespace microCMDB.common
                     continue;
                 }
 
-                string[] parts = input.Split(' ', 2);
+                string[] parts = input.Split(' ');
                 if (parts.Length > 0)
                 {
                     // The command is the first part of the input
@@ -110,7 +122,7 @@ namespace microCMDB.common
                             {
                                 case "configitems":
                                 case "c":
-                                    Util.Set.SetConfigItems();
+                                    Util.Set.SetConfigItems(parts[2]);
                                     break;
                                 case "nodes":
                                 case "n":
@@ -166,13 +178,15 @@ namespace microCMDB.common
                             Util.Get.SpecificGet(args);
                             break;
                         case "ver":
-                            Console.WriteLine("microCMDB CLI v1.0");
+                            Console.WriteLine("microCMDB CLI Build: " + BuildInfo.BuildNumber);
+                            Console.WriteLine("Developed by Arawn Davies (2024) for Computer Science BSc Final Year Project");
                             break;
                         case "export":
                             Util.Get.Export();
                             break;
                         case "exit":
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");
+                            running = false;
                             return;
                         
                         default:

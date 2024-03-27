@@ -82,7 +82,7 @@ namespace microCMDB.common.Models
         [Display(Name = "Port Number")]
         public int PortNum{ get; set; }
 
-        public int? HostId { get; set; }
+        public int HostId { get; set; }
         public HostServiceMapping? HostServiceMapping { get; set; }
 
         public override void PrintInfo()

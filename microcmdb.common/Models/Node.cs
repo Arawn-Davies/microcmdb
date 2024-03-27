@@ -11,7 +11,7 @@
 using microCMDB.common.Util;
 using System.ComponentModel.DataAnnotations;
 
-namespace microCMDB.common.Models
+namespace microCMDB. common.Models
 {
     public class Node : Entity
     {
@@ -23,7 +23,7 @@ namespace microCMDB.common.Models
             }
             else
             {
-                ConfigItemID = null;
+                ConfigItemID = 0;
             }
             Db.CurrentDbContext.Nodes.Add(this);
         }
@@ -42,14 +42,14 @@ namespace microCMDB.common.Models
         
         // A required field for the amount of RAM. This is a double to allow for decimal values as the default unit is megabytes.
         [Display(Name = "RAM")]
-        public double? RAM { get; set; }
+        public double RAM { get; set; }
         
         // A required field for the amount of storage. This is a double to allow for decimal values as the default unit is gigabytes.
         [Display(Name = "Storage")]
-        public double? Storage { get; set; } 
+        public double Storage { get; set; } 
         
         // A required field for which ConfigItem the node is associated with
-        public int? ConfigItemID { get; set; }
+        public int ConfigItemID { get; set; }
         [Display(Name = "Linked Configuration Item")]
         public CINodeMapping? CINodeMapping { get; set; }
 

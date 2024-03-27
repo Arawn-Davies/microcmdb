@@ -29,7 +29,7 @@ namespace microCMDB.common.Models
         /// An optional field for the date the ConfigItem was purchased
         /// </summary>
         [Display(Name = "Date purchased")]
-        public DateTime? PurchaseDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
 
         /// <summary>
         ///  An optional field for the deployment location of the ConfigItem (e.g. datacenter, office, mobile etc.)
