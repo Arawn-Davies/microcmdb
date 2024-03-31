@@ -185,8 +185,9 @@ namespace microCMDB.common.Util
         }
 
         // Prompt the user for a specific DbTag and delete the associated entity from its respective ICollection
-        public static void DeleteEntity(string _dbTag)
+        public static void DeleteEntity(string input)
         {
+            string _dbTag = input.ToUpper();
             if (Db.CurrentDbContext == null)
             {
                 Console.WriteLine("No database context found. Please create a new database context before deleting data.");
