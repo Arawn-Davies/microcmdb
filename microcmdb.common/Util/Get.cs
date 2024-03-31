@@ -9,11 +9,6 @@
 // Purpose : Utility class to provide methods for retrieving entities from the microCMDB backend.
 
 using microCMDB.common.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace microCMDB.common.Util
 {
@@ -30,7 +25,7 @@ namespace microCMDB.common.Util
                 {
                     configItem.PrintInfo();
                 }
-            }
+            } 
 
             foreach (Software software in Db.CurrentDbContext.Software)
             {

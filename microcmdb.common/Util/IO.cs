@@ -1,9 +1,14 @@
-﻿using microCMDB.common.Models;
+﻿/*
+ * 
+ * Copyright (C) Arawn Davies 2024
+ * Programme: Computer Science BSc (Hons).
+ * Year 3 Final Year Project: microCMDB
+ * 
+ */
+
+// Purpose : Utility class to provide methods for importing and exporting data to and from the microCMDB backend.
+using microCMDB.common.Models;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace microCMDB.common.Util
 {
