@@ -105,35 +105,10 @@ namespace microCMDB.common.Util
                 // Check if the user input is null or empty
                 // If it is, then do not parse the date
                 Console.Write("Enter the purchase date (DD/MM/YYYY):");
-                string? _purchasedStr = Console.ReadLine();
-                DateTime _purchasedDT = DateTime.Now;
-                if (!string.IsNullOrEmpty(_purchasedStr))
-                {
+                
+                // Parse the string as a DateTime object
+                DateTime _purchasedDT = IO.GetDate(Console.ReadLine());
 
-                    bool validDate = false;
-                    while (!validDate)
-                    {
-                        try
-                        {
-                            // Split the string into three segments separated by '/'
-                            string[] dateParts = _purchasedStr.Split('/');
-                            // Store the day, month and year as integers
-                            int day = Convert.ToInt32(dateParts[0]);
-                            int month = Convert.ToInt32(dateParts[1]);
-                            int year = Convert.ToInt32(dateParts[2]);
-                            // Create a new DateTime object with the parsed day, month and year
-                            _purchasedDT = new DateTime(year, month, day);
-                            validDate = true;
-                        }
-                        catch (Exception e)
-                        {
-                            Console.WriteLine("Invalid date. Use format DD/MM/YYYY - Please retry.");
-                            _purchasedStr = Console.ReadLine();
-                        }
-                    }
-
-
-                }
                 Console.Write("Enter any notes:");
                 Notes = Console.ReadLine();
                 Console.Write("Enter the deployment location:");
@@ -149,7 +124,7 @@ namespace microCMDB.common.Util
                         {
                             configItem.Name = Name;
                         }
-                        if (!string.IsNullOrEmpty(_purchasedStr))
+                        if (_purchasedDT != DateTime.MinValue)
                         {
                             configItem.PurchaseDate = _purchasedDT;
                         }

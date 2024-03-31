@@ -55,5 +55,14 @@ namespace microCMDB.common.Models
             return $"ConfigItem,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PurchaseDate},{DeployLoc}";
         }
 
+        public ConfigItem(string _dbTag, string _name, string _description, DateTime _dt, string _deployLoc)
+        {
+            DbTag = _dbTag;
+            Name = _name;
+            Description = _description;
+            PurchaseDate = _dt;
+            DeployLoc = _deployLoc;
+        }
+
     }
 }

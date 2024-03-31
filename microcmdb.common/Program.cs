@@ -18,6 +18,7 @@ namespace microCMDB.common
         public static bool running = false;
         private static void Main()
         {
+            IO.path = "C:\\microCMDB\\";
             running = true;
             while (running == true)
             {
@@ -31,7 +32,12 @@ namespace microCMDB.common
             if (Db.CurrentDbContext == null)
             {
                 Db.CurrentDbContext = new Db();
-                Db.CurrentDbContext.SeedDatabase();
+                IO.resp = IO.GetYesNo("No database loaded. Would you like to seed the database?");
+                if (IO.resp == true)
+                {
+                    Console.WriteLine("Creating a new database...");
+                    Db.CurrentDbContext.SeedDatabase();
+                }
             }
 
 
@@ -40,7 +46,7 @@ namespace microCMDB.common
 
             while (true)
             {
-                Console.Write("> ");
+                Console.Write("\n> ");
 
 
                 string? input = Console.ReadLine()?.ToLower();
@@ -62,14 +68,13 @@ namespace microCMDB.common
                     // The arguments are the second part of the input, if it exists
                     string args = parts.Length > 1 ? parts[1] : string.Empty;
 
-                    Console.WriteLine(" ");
-
                     switch (command)
                     {
                         case "":
                             // If the input is empty, skip the rest of the loop
                             break;
-                        case "cls": case "clear":
+                        case "cls":
+                        case "clear":
                             Console.Clear();
                             break;
                         case "help":
@@ -149,6 +154,20 @@ namespace microCMDB.common
                         case "new":
                             switch (args)
                             {
+                                case "db":
+                                    if (Db.CurrentDbContext != null)
+                                    {
+                                        IO.resp = IO.GetYesNo("The currently loaded database will be lost. Make sure you export to avoid data loss." +
+                                            "\nDo you want to continue?");
+                                        if (IO.resp == false)
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    Db.CurrentDbContext = new Db();
+
+
+                                    break;
                                 case "configitem":
                                 case "c":
                                     Util.New.NewConfigItem();
@@ -174,21 +193,25 @@ namespace microCMDB.common
                                     break;
                             }
                             break;
-                        case "sget":
-                            Util.Get.SpecificGet(args);
+                        case "find":
+                            Get.Find(args);
+                            break;
+                        case "delete":
+                            IO.DeleteEntity(args);
                             break;
                         case "ver":
                             Console.WriteLine("microCMDB CLI Build: " + BuildInfo.BuildNumber);
                             Console.WriteLine("Developed by Arawn Davies (2024) for Computer Science BSc Final Year Project");
                             break;
                         case "export":
-                            Util.Get.Export();
+                            //Util.Get.Export();
+                            IO.Export();
                             break;
                         case "exit":
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");
                             running = false;
                             return;
-                        
+
                         default:
                             Console.WriteLine("Invalid command. Type 'help' for available commands.");
                             break;

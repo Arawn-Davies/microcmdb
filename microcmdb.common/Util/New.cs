@@ -28,43 +28,17 @@ namespace microCMDB.common.Util
 
             Console.WriteLine("Enter the name:");
             string? _name = Console.ReadLine();
+
             Console.WriteLine("Enter the purchase date:");
-            string _purchasedStr = Console.ReadLine();
-            DateTime _purchasedDT = DateTime.Now;
-
-            // Try and parse the date string to a DateTime object without using any TryParse methods by analyzing the string for characters, and handle any exceptions
-            // If the date string is invalid, print an error message and prompt the user to enter the date again
-            // If the date string is valid, set the PurchaseDate property of the ConfigItem object to the parsed DateTime object
-            if (!string.IsNullOrEmpty(_purchasedStr))
-            {
-                bool validDate = false;
-                while (!validDate)
-                {
-                    try
-                    {
-                        // Split the string into three segments separated by '/'
-                        string[] dateParts = _purchasedStr.Split('/');
-                        // Store the day, month and year as integers
-                        int day = Convert.ToInt32(dateParts[0]);
-                        int month = Convert.ToInt32(dateParts[1]);
-                        int year = Convert.ToInt32(dateParts[2]);
-                        // Create a new DateTime object with the parsed day, month and year
-                        _purchasedDT = new DateTime(year, month, day);
-                        validDate = true;
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Invalid date. Use format DD/MM/YYYY - Please retry.");
-                        _purchasedStr = Console.ReadLine();
-                    }
-                }
-            }
-
+            // Parse the string as a DateTime object
+            DateTime _purchasedDT = IO.GetDate(Console.ReadLine());
 
             Console.WriteLine("Enter when last updated:");
             DateTime _updatedDT = DateTime.Now;
+            
             Console.WriteLine("Enter any notes:");
             string? _notes = Console.ReadLine();
+            
             Console.WriteLine("Enter the deployment location:");
             string? _deployLoc = Console.ReadLine();
 
