@@ -1,0 +1,13 @@
+version: 1.0.{build}
+image:
+- Visual Studio 2022
+- Ubuntu
+- macOS-Sonoma
+clone_folder: C:\projects\microcmdb\
+before_build:
+- pwsh: dotnet restore microCMDB.CLI\microCMDB.CLI.csproj
+build:
+  project: microCMDB.CLI\microCMDB.CLI.csproj
+  publish_aspnet_core: true
+  publish_core_console: true
+  verbosity: minimal
