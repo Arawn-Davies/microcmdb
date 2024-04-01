@@ -18,7 +18,7 @@ namespace microCMDB.CLI
         public static bool running = false;
         private static void Main()
         {
-            IO.path = Directory.GetCurrentDirectory() + Path.PathSeparator + "microCMDB";
+            IO.path = Directory.GetCurrentDirectory();
             IO.Hosted = true;
             running = true;
             while (running == true)
