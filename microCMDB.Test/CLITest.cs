@@ -1,5 +1,6 @@
 using microCMDB.CLI;
 using microCMDB.CLI.Models;
+using Microsoft.VisualStudio.TestPlatform.Utilities;
 
 namespace microCMDB.Test
 {
@@ -14,7 +15,6 @@ namespace microCMDB.Test
             // Create a new instance of the Db class
             Db.CurrentDbContext = new Db();
             Software egApp = new Software { Name = "TestApp", Version = "1.0" };
-            Db.CurrentDbContext.Software.Add(egApp);
             Assert.IsTrue(Db.CurrentDbContext.Software.First().Name == "TestApp");
         }
 
@@ -23,7 +23,6 @@ namespace microCMDB.Test
         {
             Db.CurrentDbContext = new Db();
             ConfigItem egConfigItem = new ConfigItem { Name = "TestConfigItem" };
-            Db.CurrentDbContext.ConfigItems.Add(egConfigItem);
             Assert.IsTrue(Db.CurrentDbContext.ConfigItems.First().Name == "TestConfigItem");
         }
         [TestMethod]
@@ -39,7 +38,6 @@ namespace microCMDB.Test
         {
             Db.CurrentDbContext = new Db();
             Host egHost = new Host { Name = "TestHost" };
-            Db.CurrentDbContext.Hosts.Add(egHost);
             Assert.IsTrue(Db.CurrentDbContext.Hosts.First().Name == "TestHost");
         }
         [TestMethod]
@@ -47,7 +45,6 @@ namespace microCMDB.Test
         {
             Db.CurrentDbContext = new Db();
             Service egService = new Service { Name = "TestService" };
-            Db.CurrentDbContext.Services.Add(egService);
             Assert.IsTrue(Db.CurrentDbContext.Services.First().Name == "TestService");
         }
         [TestMethod]
@@ -55,8 +52,18 @@ namespace microCMDB.Test
         {
             Db.CurrentDbContext = new Db();
             NetworkUser egNetworkUser = new NetworkUser { Name = "TestNetworkUser" };
-            Db.CurrentDbContext.NetworkUsers.Add(egNetworkUser);
             Assert.IsTrue(Db.CurrentDbContext.NetworkUsers.First().Name == "TestNetworkUser");
+        }
+
+        [TestMethod]
+        public void DeleteCITest()
+        {
+            Db.CurrentDbContext = new Db();
+            Node egNode = new Node { Name = "TestNode", CPU_Arch = "x86_64", RAM = 32768, Description = "Put a more descriptive description here"};
+            Console.WriteLine("Example Node: " + egNode.ExportObject());
+            CLI.Util.IO.DeleteEntity(egNode.DbTag);
+            bool found = CLI.Util.Get.Find(egNode.DbTag);
+            Assert.IsFalse(found, "Failed to delete Node entity from database");
         }
 
         // Test the DbTag property for each entity type

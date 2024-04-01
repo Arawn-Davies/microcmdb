@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace microCMDB.CLI.Util
 {
-    internal class New
+    public class New
     {
         // Similar to the Set and Get classes, create methods to create new entities in the Db CurrentDbContext object
 

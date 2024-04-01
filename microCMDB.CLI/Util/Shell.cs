@@ -175,7 +175,7 @@ namespace microCMDB.CLI.Util
                             }
                             break;
                         case "find":
-                            Get.Find(args);
+                            Get.PrintEntityInfo(args);
                             break;
                         case "delete":
                             IO.DeleteEntity(args);

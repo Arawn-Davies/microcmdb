@@ -213,6 +213,34 @@ namespace microCMDB.CLI.Util
                 Console.WriteLine("No database context found. Please create a new database context before deleting data.");
                 return;
             }
+            if (Db.CurrentDbContext.Entities.Any(o => o.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.Entities.Remove(Db.CurrentDbContext.Entities.First(o => o.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.CINodeMappings.Any(cnm => cnm.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.CINodeMappings.Remove(Db.CurrentDbContext.CINodeMappings.First(cnm => cnm.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.NodeHostMappings.Any(nhm => nhm.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.NodeHostMappings.Remove(Db.CurrentDbContext.NodeHostMappings.First(nhm => nhm.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.HostServiceMappings.Any(hsm => hsm.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.HostServiceMappings.Remove(Db.CurrentDbContext.HostServiceMappings.First(hsm => hsm.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.SoftwareInstallations.Any(si => si.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.SoftwareInstallations.Remove(Db.CurrentDbContext.SoftwareInstallations.First(si => si.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.NetworkUserMappings.Any(num => num.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.NetworkUserMappings.Remove(Db.CurrentDbContext.NetworkUserMappings.First(num => num.DbTag == _dbTag));
+            }
+            else if (Db.CurrentDbContext.ConfigItems.Any(ci => ci.DbTag == _dbTag))
+            {
+                Db.CurrentDbContext.Entities.Remove(Db.CurrentDbContext.Entities.First(ci => ci.DbTag == _dbTag));
+            }
             if (Db.CurrentDbContext.ConfigItems.Any(ci => ci.DbTag == _dbTag))
             {
                 Db.CurrentDbContext.ConfigItems.Remove(Db.CurrentDbContext.ConfigItems.First(ci => ci.DbTag == _dbTag));

@@ -12,10 +12,32 @@ using microCMDB.CLI.Models;
 
 namespace microCMDB.CLI.Util
 {
-    internal class Get
+    public class Get
     {
-        public static void Find(string _tag)
+        public static bool Find(string _tag)
         {
+            bool found = false;
+
+            // If the tag does not match any of the prefixes found in Entity.EntityTypes, print an error message.
+            foreach (string s in Entity.Prefixes)
+            {
+                if (_tag.ToLower().StartsWith(s.ToLower()))
+                {
+                    foreach (Entity ent in Db.CurrentDbContext.Entities)
+                    {
+                        if (ent.DbTag.ToLower() == _tag.ToLower())
+                        {
+                            found = true;
+                        }
+                    }
+                }
+            }
+
+            return found;
+        }
+        public static void PrintEntityInfo(string _tag)
+        {
+
             Table.PrintLine();
             // Sort through the collections and compare the DbTag prefix and compare it to the first three letters of the method parameter.
             // If the prefix matches, call the PrintInfo method on the specific object
@@ -25,7 +47,7 @@ namespace microCMDB.CLI.Util
                 {
                     configItem.PrintInfo();
                 }
-            } 
+            }
 
             foreach (Software software in Db.CurrentDbContext.Software)
             {
@@ -62,21 +84,6 @@ namespace microCMDB.CLI.Util
                 {
                     node.PrintInfo();
                 }
-            }
-
-            bool found = false;
-            // If the tag does not match any of the prefixes found in Entity.EntityTypes, print an error message.
-            foreach (string s in Entity.Prefixes)
-            {
-                if (_tag.ToLower().StartsWith(s.ToLower()))
-                {
-                    found = true;
-                }
-            }
-            if (!found)
-            {
-                Console.WriteLine("No entity found with the tag: " + _tag);
-                Console.WriteLine("Please enter a valid database entry.");
             }
             Table.PrintLine();
         }
