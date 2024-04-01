@@ -27,7 +27,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the NetworkUserMapping object containing every property
-            return $"NetworkUserMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{NetworkUserID}";
+            return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{NetworkUserID}";
         }
 
     }

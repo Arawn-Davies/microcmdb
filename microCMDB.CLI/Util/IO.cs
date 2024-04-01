@@ -12,8 +12,21 @@ using System.IO;
 
 namespace microCMDB.CLI.Util
 {
-    internal class IO
+    public class IO
     {
+        private static string[] CIs = new string[999];
+        
+        private static string[] Nodes = new string[999];
+        private static string[] Hosts = new string[999];
+        private static string[] Services = new string[999];
+        private static string[] Software = new string[999];
+        private static string[] NetworkUsers = new string[999];
+        private static string[] CINodeMappings = new string[999];
+        private static string[] NodeHostMappings = new string[999];
+        private static string[] HostServiceMappings = new string[999];
+        private static string[] SoftwareInstallations = new string[999];
+        private static string[] NetworkUserMappings = new string[999];
+
         // Prompt the user to respond with a 'y' or 'n' and return the response as a boolean
         public static bool GetYesNo(string _prompt)
         {
@@ -30,96 +43,97 @@ namespace microCMDB.CLI.Util
         }
 
 
-        public static string path = Directory.GetCurrentDirectory() + "/data/";
+        public static string? path;
         public static bool resp = false;
         // Export all of the ICollection properties to a CSV file
         public static void Export()
         {
+            Console.WriteLine("Exporting data to CSV files...");
+            
             if (!Directory.Exists(path))
             {
-                Console.WriteLine("");
+                Directory.CreateDirectory(path);
             }
             if (Db.CurrentDbContext == null)
             {
                 Console.WriteLine("No database context found. Please create a new database context before exporting data.");
                 return;
             }
-            List<string> EntityCSV = new List<string>();
-            List<string> CIs = new List<string>();
-            List<string> Nodes = new List<string>();
-            List<string> Hosts = new List<string>();
-            List<string> Services = new List<string>();
-            List<string> Software = new List<string>();
-            List<string> NetworkUsers = new List<string>();
-            List<string> CINodeMappings = new List<string>();
-            List<string> NodeHostMappings = new List<string>();
-            List<string> HostServiceMappings = new List<string>();
-            List<string> SoftwareInstallations = new List<string>();
-            List<string> NetworkUserMappings = new List<string>();
-            List<string> MapCSV = new List<string>();
 
+            // Write the contents of each ICollection to a CSV file
+            Console.WriteLine("Writing CSV files...");
             #region Entity-specific CSV
             foreach (ConfigItem ci in Db.CurrentDbContext.ConfigItems)
             {
-                CIs.Add(ci.ExportObject());
+                Console.WriteLine(ci.ExportObject());
+                //File.AppendAllText(path + "cfgitems.csv", ci.ExportObject() + "\n");
             }
             foreach (Node node in Db.CurrentDbContext.Nodes)
             {
-                Nodes.Add(node.ExportObject());
+                Console.WriteLine(node.ExportObject());
+                //File.AppendAllText(path + "nod.csv", node.ExportObject() + "\n");
             }
             foreach (Host host in Db.CurrentDbContext.Hosts)
             {
-                Hosts.Add(host.ExportObject());
+                Console.WriteLine(host.ExportObject());
+                // Append the host ExportObject string to the hst.csv file
+                //File.AppendAllText(path + "hst.csv", host.ExportObject() + "\n");
             }
             foreach (Service service in Db.CurrentDbContext.Services)
             {
-                Services.Add(service.ExportObject());
+                Console.WriteLine(service.ExportObject());
+                // Append the service ExportObject string to the svc.csv file
+                //File.AppendAllText(path + "svc.csv", service.ExportObject() + "\n");
             }
             foreach (Software software in Db.CurrentDbContext.Software)
             {
-                Software.Add(software.ExportObject());
+                Console.WriteLine(software.ExportObject());
+                // Append the software ExportObject string to the stw.csv file
+                //File.AppendAllText(path + "stw.csv", software.ExportObject() + "\n");
             }
             foreach (NetworkUser networkUser in Db.CurrentDbContext.NetworkUsers)
             {
-                NetworkUsers.Add(networkUser.ExportObject());
+                Console.WriteLine(networkUser.ExportObject());
+                // Append the networkUser ExportObject string to the nus.csv file
+                //File.AppendAllText(path + "nus.csv", networkUser.ExportObject() + "\n");
             }
             #endregion
+            Console.WriteLine("Entity-specific CSVs written...");
 
+            Console.WriteLine("Writing Mapping-specific CSVs...");
             #region Mapping-specific CSV
             foreach (CINodeMapping ciNodeMapping in Db.CurrentDbContext.CINodeMappings)
             {
-                CINodeMappings.Add(ciNodeMapping.ExportObject());
+                Console.WriteLine(ciNodeMapping.ExportObject());
+                // Append the ciNodeMapping ExportObject string to the cinmap.csv file
+                //File.AppendAllText(path + "cinmap.csv", ciNodeMapping.ExportObject() + "\n");
             }
             foreach (NodeHostMapping nodeHostMapping in Db.CurrentDbContext.NodeHostMappings)
             {
-                NodeHostMappings.Add(nodeHostMapping.ExportObject());
+                Console.WriteLine(nodeHostMapping.ExportObject());
+                // Append the nodeHostMapping ExportObject string to the ndhmap.csv file
+                //File.AppendAllText(path + "ndhmap.csv", nodeHostMapping.ExportObject() + "\n");
             }
             foreach (HostServiceMapping hostServiceMapping in Db.CurrentDbContext.HostServiceMappings)
             {
-                HostServiceMappings.Add(hostServiceMapping.ExportObject());
+                Console.WriteLine(hostServiceMapping.ExportObject());
+                // Append the hostServiceMapping ExportObject string to the hsvmap.csv file
+                //File.AppendAllText(path + "hsvmap.csv", hostServiceMapping.ExportObject() + "\n");
             }
             foreach (SoftwareInstallation softwareInstallation in Db.CurrentDbContext.SoftwareInstallations)
             {
-                SoftwareInstallations.Add(softwareInstallation.ExportObject());
+                Console.WriteLine(softwareInstallation.ExportObject());
+                // Append the softwareInstallation ExportObject string to the sinmap.csv file
+                //File.AppendAllText(path + "sinmap.csv", softwareInstallation.ExportObject() + "\n");
             }
             foreach (NetworkUserMapping networkUserMapping in Db.CurrentDbContext.NetworkUserMappings)
             {
-                NetworkUserMappings.Add(networkUserMapping.ExportObject());
+                Console.WriteLine(networkUserMapping.ExportObject());
+                // Append the networkUserMapping ExportObject string to the nusmap.csv file
+                //File.AppendAllText(path + "nusmap.csv", networkUserMapping.ExportObject() + "\n");
             }
             #endregion
-
-            File.WriteAllLines(path + "cfgitems.csv", CIs);
-            File.WriteAllLines(path + "nodes.csv", Nodes);
-            File.WriteAllLines(path + "hosts.csv", Hosts);
-            File.WriteAllLines(path + "services.csv", Services);
-            File.WriteAllLines(path + "software.csv", Software);
-            File.WriteAllLines(path + "networkusers.csv", NetworkUsers);
-            File.WriteAllLines(path + "cinodemappings.csv", CINodeMappings);
-            File.WriteAllLines(path + "nodehostmappings.csv", NodeHostMappings);
-            File.WriteAllLines(path + "hostservicemappings.csv", HostServiceMappings);
-            File.WriteAllLines(path + "softwareinstallations.csv", SoftwareInstallations);
-            File.WriteAllLines(path + "networkusermappings.csv", NetworkUserMappings);
-
+            Console.WriteLine("Mapping-specific CSVs written...");
         }
 
         public static void Import()
@@ -140,7 +154,7 @@ namespace microCMDB.CLI.Util
                 {
                     Console.WriteLine("Importing data from file: " + ci);
                     string[] prop = ci.Split(',');
-                    new ConfigItem( prop[0],prop[1],prop[2],GetDate(prop[3]),prop[4]);
+                    new ConfigItem(prop[0], prop[1], prop[2], GetDate(prop[3]), prop[4]);
                 }
             }
         }

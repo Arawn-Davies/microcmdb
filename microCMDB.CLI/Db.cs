@@ -22,32 +22,33 @@ namespace microCMDB.CLI
     {
         public static Db? CurrentDbContext { get; set; }
 
-        public ICollection<Entity> Entities {  get; set; }
+        public List<Entity> Entities {  get; set; }
 
-        public ICollection<ConfigItem> ConfigItems { get; set; }
+        public List<ConfigItem> ConfigItems { get; set; }
         
-        public ICollection<Node> Nodes { get; set; }
+        public List<Node> Nodes { get; set; }
 
-        public ICollection<Host> Hosts { get; set; }
+        public List<Host> Hosts { get; set; }
 
-        public ICollection<Service> Services { get; set; }
+        public List<Service> Services { get; set; }
 
-        public ICollection<Software> Software { get; set; }
+        public List<Software> Software { get; set; }
 
-        public ICollection<NetworkUser> NetworkUsers{ get; set; }
+        public List<NetworkUser> NetworkUsers{ get; set; }
 
-        public ICollection<CINodeMapping> CINodeMappings { get; set; }
+        public List<CINodeMapping> CINodeMappings { get; set; }
 
-        public ICollection<NodeHostMapping> NodeHostMappings { get; set; }    
+        public List<NodeHostMapping> NodeHostMappings { get; set; }    
 
-        public ICollection<HostServiceMapping> HostServiceMappings { get; set; }
+        public List<HostServiceMapping> HostServiceMappings { get; set; }
 
-        public ICollection<SoftwareInstallation> SoftwareInstallations { get; set;}
+        public List<SoftwareInstallation> SoftwareInstallations { get; set;}
 
-        public ICollection<NetworkUserMapping> NetworkUserMappings { get; set; }
+        public List<NetworkUserMapping> NetworkUserMappings { get; set; }
 
         public Db()
         {
+            Console.WriteLine("Creating collections...");
             Entities = new List<Entity>();
             ConfigItems = new List<ConfigItem>();
             Nodes = new List<Node>();
@@ -60,6 +61,7 @@ namespace microCMDB.CLI
             HostServiceMappings = new List<HostServiceMapping>();
             SoftwareInstallations = new List<SoftwareInstallation>();
             NetworkUserMappings = new List<NetworkUserMapping>();
+            Console.WriteLine("Collections created.");
         }
 
         public void SeedDatabase()

@@ -30,7 +30,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the HostServiceMapping object containing every property
-            return $"HostServiceMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{HostID},{ServiceID}";
+            return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{HostID},{ServiceID}";
         }
     }
 }

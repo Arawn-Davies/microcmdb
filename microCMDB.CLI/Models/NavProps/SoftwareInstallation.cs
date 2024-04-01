@@ -34,7 +34,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the SoftwareInstallation object containing every property
-            return $"SoftwareInstallation,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{SoftwareID}";
+            return $"{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{SoftwareID}";
         }
     }
 }

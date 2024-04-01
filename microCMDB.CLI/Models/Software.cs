@@ -61,7 +61,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the Software object containing every property
-            return $"Software,{Id},{DbTag},{Name},{Version},{Developer},{LicenseType}";
+            return $"{DbTag},{Name},{Version},{Developer},{LicenseType}";
         }
     }
 }

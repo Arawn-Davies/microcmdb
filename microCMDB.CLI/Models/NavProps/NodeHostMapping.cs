@@ -26,7 +26,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the NodeHostMapping object containing every property
-            return $"NodeHostMapping,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{HostID}";
+            return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{NodeID},{HostID}";
         }
     }
 }

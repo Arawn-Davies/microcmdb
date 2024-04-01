@@ -205,7 +205,15 @@ namespace microCMDB.CLI
                             break;
                         case "export":
                             //Util.Get.Export();
-                            IO.Export();
+                            try
+                            { 
+                                IO.Export();
+                            }
+                            catch (Exception e)
+                            {
+                                Console.WriteLine("An error occurred while exporting data: " + e.Message);
+                            }
+                            
                             break;
                         case "exit":
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");

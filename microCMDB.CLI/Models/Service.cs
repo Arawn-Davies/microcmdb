@@ -96,7 +96,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the Service object containing every property
-            return $"Service,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PortNum},{Protocol},{HostId}";
+            return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PortNum},{Protocol},{HostId}";
         }
     }
 }

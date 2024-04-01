@@ -52,7 +52,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the ConfigItem object containing every property
-            return $"ConfigItem,{Id},{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PurchaseDate},{DeployLoc}";
+            return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PurchaseDate},{DeployLoc}";
         }
 
         public ConfigItem(string _dbTag, string _name, string _description, DateTime _dt, string _deployLoc)

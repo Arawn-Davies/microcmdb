@@ -48,7 +48,7 @@ namespace microCMDB.CLI.Models
         public override string ExportObject()
         {
             // Return a string representation of the NetworkUser object containing every property
-            return $"NetworkUser,{Id},{DbTag},{Username},{Email},{Firstname},{Lastname}";
+            return $"{DbTag},{Username},{Email},{Firstname},{Lastname}";
         }
 
     }
