@@ -14,8 +14,9 @@ namespace microCMDB.CLI.Util
 {
     public class IO
     {
+        public static bool Hosted;
+
         private static string[] CIs = new string[999];
-        
         private static string[] Nodes = new string[999];
         private static string[] Hosts = new string[999];
         private static string[] Services = new string[999];

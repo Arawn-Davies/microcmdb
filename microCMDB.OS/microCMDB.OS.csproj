@@ -27,6 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\microCMDB.CLI\microCMDB.CLI.csproj" />
       <ProjectReference Include="..\microcmdb.common\microCMDB.CLI.csproj" />
     </ItemGroup>
 

@@ -21,6 +21,7 @@ namespace microCMDB.lite
             vFS = new CosmosVFS();
             VFSManager.RegisterVFS(vFS);
             IO.path = driveID + "\\ucmdb\\";
+            IO.Hosted = false;
             var fs_type = vFS.GetFileSystemType(@"0:\");
             Console.WriteLine("File System Type: " + fs_type);
             var files_list = Directory.GetFiles(@"0:\");
@@ -43,7 +44,7 @@ namespace microCMDB.lite
             {
                 try
                 {
-                    Program.CLI();
+                    Shell.CLI();
                 }
                 catch (Exception ex)
                 {
