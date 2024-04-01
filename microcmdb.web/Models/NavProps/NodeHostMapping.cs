@@ -1,4 +1,4 @@
-﻿namespace microcmdb.Web.Models
+﻿namespace microCMDB.Web.Models
 {
     public class NodeHostMapping
     {

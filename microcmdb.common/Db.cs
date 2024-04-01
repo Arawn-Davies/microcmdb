@@ -14,9 +14,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using microCMDB.common.Models;
+using microCMDB.CLI.Models;
 
-namespace microCMDB.common
+namespace microCMDB.CLI
 {
     public class Db
     {

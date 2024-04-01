@@ -8,7 +8,7 @@
 
 // Purpose : Model class to represent NetworkUser/Node mappings in the microCMDB backend.
 
-namespace microCMDB.common.Models
+namespace microCMDB.CLI.Models
 {
     public class NetworkUserMapping : Entity
     {

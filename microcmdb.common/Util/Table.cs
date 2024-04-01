@@ -14,7 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace microCMDB.common.Util
+namespace microCMDB.CLI.Util
 {
     internal class Table
     {

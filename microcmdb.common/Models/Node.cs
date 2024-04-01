@@ -8,10 +8,10 @@
 
 // Purpose: Model class to represent Nodes in the microCMDB backend.
 
-using microCMDB.common.Util;
+using microCMDB.CLI.Util;
 using System.ComponentModel.DataAnnotations;
 
-namespace microCMDB. common.Models
+namespace microCMDB.CLI.Models
 {
     public class Node : Entity
     {

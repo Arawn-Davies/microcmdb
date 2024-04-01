@@ -8,7 +8,7 @@
 
 // Purpose : Model class to represent Node-Host mappings in the microCMDB backend.
 
-namespace microCMDB.common.Models
+namespace microCMDB.CLI.Models
 {
     public class NodeHostMapping : Entity
     {

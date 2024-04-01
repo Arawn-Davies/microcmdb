@@ -13,9 +13,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using microCMDB.common.Util;
+using microCMDB.CLI.Util;
 
-namespace microCMDB.common.Models
+namespace microCMDB.CLI.Models
 {
     public abstract class Entity
     {

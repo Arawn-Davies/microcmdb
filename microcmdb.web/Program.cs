@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
-using microcmdb.Web.Data;
+using microCMDB.Web.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

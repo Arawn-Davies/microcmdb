@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using microcmdb.Web.Models;
+using microCMDB.Web.Models;
 
-namespace microcmdb.Web
+namespace microCMDB.Web
 {
     public class HomeController : Controller
     {

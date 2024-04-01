@@ -7,7 +7,7 @@
  */
 
 // Purpose : Model class to represent Host/Service mappings in the microCMDB backend.
-namespace microCMDB.common.Models
+namespace microCMDB.CLI.Models
 {
     public class HostServiceMapping : Entity
     {

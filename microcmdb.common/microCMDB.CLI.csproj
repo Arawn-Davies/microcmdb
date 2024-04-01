@@ -17,7 +17,7 @@
 		<Date>$([System.DateTime]::Now.ToString("dd"))</Date>
 		<Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
 		<GenVerCS>
-namespace microCMDB.common.Util
+namespace microCMDB.CLI.Util
 {
 
 	///<summary>

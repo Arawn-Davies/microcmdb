@@ -8,17 +8,17 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["microcmdb/microcmdb.csproj", "microcmdb/"]
-RUN dotnet restore "./microcmdb/./microcmdb.csproj"
+COPY ["microCMDB/microCMDB.csproj", "microCMDB/"]
+RUN dotnet restore "./microCMDB/./microCMDB.csproj"
 COPY . .
 WORKDIR "/src/exampleMVC"
-RUN dotnet build "./microcmdb.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "./microCMDB.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./microcmdb.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./microCMDB.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "microcmdb.dll"]
+ENTRYPOINT ["dotnet", "microCMDB.dll"]

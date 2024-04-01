@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace microcmdb.Web.Models
+namespace microCMDB.Web.Models
 {
     public class Host
     {

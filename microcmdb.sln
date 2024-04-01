@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.web", "microcmdb.web\microCMDB.web.csproj", "{63A5CE73-144B-4699-911A-9951B7451B09}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.Web", "microcmdb.web\microCMDB.Web.csproj", "{63A5CE73-144B-4699-911A-9951B7451B09}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.lite", "microcmdb.lite\microCMDB.lite.csproj", "{9D490288-C003-432F-8646-7FC6F4A692ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.OS", "microcmdb.lite\microCMDB.OS.csproj", "{9D490288-C003-432F-8646-7FC6F4A692ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.common", "microcmdb.common\microCMDB.common.csproj", "{47AF2AE7-3FBE-46E1-84DC-F3511BD7A6C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.CLI", "microcmdb.common\microCMDB.CLI.csproj", "{47AF2AE7-3FBE-46E1-84DC-F3511BD7A6C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microCMDB.test", "microCMDB.Test\microCMDB.test.csproj", "{F14D5A1F-A5D7-4EC2-B89F-C60C93FB0E24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "microCMDB.Test", "microCMDB.Test\microCMDB.Test.csproj", "{F14D5A1F-A5D7-4EC2-B89F-C60C93FB0E24}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace microcmdb.Web.Migrations
+namespace microCMDB.Web.Migrations
 {
     /// <inheritdoc />
     public partial class InitialMigration : Migration

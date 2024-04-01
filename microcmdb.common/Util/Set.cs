@@ -8,14 +8,14 @@
 
 // Purpose : Utility class to provide methods for editing entities in the microCMDB backend.
 
-using microCMDB.common.Models;
+using microCMDB.CLI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace microCMDB.common.Util
+namespace microCMDB.CLI.Util
 {
     internal class Set
     {

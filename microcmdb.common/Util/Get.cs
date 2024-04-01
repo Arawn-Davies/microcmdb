@@ -8,9 +8,9 @@
 
 // Purpose : Utility class to provide methods for retrieving entities from the microCMDB backend.
 
-using microCMDB.common.Models;
+using microCMDB.CLI.Models;
 
-namespace microCMDB.common.Util
+namespace microCMDB.CLI.Util
 {
     internal class Get
     {

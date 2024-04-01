@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using microcmdb.Web.Data;
-using microcmdb.Web.Models;
+using microCMDB.Web.Data;
+using microCMDB.Web.Models;
 
-namespace microcmdb.web.Controllers
+namespace microCMDB.web.Controllers
 {
     public class HostsController : Controller
     {

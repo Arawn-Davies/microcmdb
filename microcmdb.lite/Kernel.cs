@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Sys = Cosmos.System;
-using microCMDB.common;
+using microCMDB.CLI;
 namespace microCMDB.lite
 {
     public class Kernel : Sys.Kernel

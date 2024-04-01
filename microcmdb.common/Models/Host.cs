@@ -10,7 +10,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace microCMDB.common.Models
+namespace microCMDB.CLI.Models
 {
     public class Host : Entity
     {

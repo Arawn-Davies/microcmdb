@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using microcmdb.Web.Models;
+using microCMDB.Web.Models;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore.Internal;
 using System.Reflection.Emit;
 using Newtonsoft.Json.Serialization;
 
-namespace microcmdb.Web.Data
+namespace microCMDB.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

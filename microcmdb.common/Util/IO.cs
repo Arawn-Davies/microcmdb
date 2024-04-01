@@ -7,10 +7,10 @@
  */
 
 // Purpose : Utility class to provide methods for importing and exporting data to and from the microCMDB backend.
-using microCMDB.common.Models;
+using microCMDB.CLI.Models;
 using System.IO;
 
-namespace microCMDB.common.Util
+namespace microCMDB.CLI.Util
 {
     internal class IO
     {
