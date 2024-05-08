@@ -54,8 +54,7 @@ namespace microCMDB.CLI.Models
                 {
                     Table.PrintRow(installation.Node.DbTag, installation.Node.Name);
                 }
-            }
-            
+            }   
         }
 
         public override string ExportObject()

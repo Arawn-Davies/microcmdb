@@ -38,6 +38,7 @@ namespace microCMDB.lite
         protected override void Run()
         {
             Program.running = true;
+            Console.Clear();
 
             // While microCMDB.CLI.Running is true, run the CLI
             while (Program.running == true)

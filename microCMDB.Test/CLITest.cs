@@ -111,9 +111,7 @@ namespace microCMDB.Test
             NetworkUser egNetworkUser = new NetworkUser { Name = "TestNetworkUser" };
             Assert.IsTrue(egNetworkUser.DbTag.StartsWith("USR"));
         }
-
         
-
         // Test the DbTag property for each entity type
         [TestMethod]
         public void DbTagTests()

@@ -93,7 +93,8 @@ namespace microCMDB.CLI.Util
             Table.PrintLine();
             foreach (var item in Db.CurrentDbContext.ConfigItems)
             {
-                item.PrintInfo();
+                //item.PrintInfo();
+                Table.PrintRow("Item ID", item.DbTag, "Item name:", item.Name);
                 Table.PrintLine();
             }
         }

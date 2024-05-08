@@ -9,6 +9,6 @@ namespace microCMDB.CLI.Util
 		///<summary>
 		///The kernel build number, generated upon a new build
 		///</summary>
-		public static string BuildNumber = "010420241737";
+		public static string BuildNumber = "080520241455";
 	}
 }

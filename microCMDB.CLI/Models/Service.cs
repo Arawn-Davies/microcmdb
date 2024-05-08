@@ -8,6 +8,7 @@
 
 // Purpose: Model class to represent Services in the microCMDB backend.
 
+using microCMDB.CLI.Util;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.Design;
 using System.Runtime.CompilerServices;
@@ -88,12 +89,12 @@ namespace microCMDB.CLI.Models
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("Port:\t\t\t" + PortNum);
-            Console.WriteLine("Protocol:\t\t" + Protocol);
-            Console.WriteLine("URL:\t\t\t" + URL());
+            Table.PrintRow("Port", PortNum.ToString());
+            Table.PrintRow("Protocol:", Protocol);
+            Table.PrintRow("URL", URL());
         }
 
-        public override string ExportObject()
+        public override string ExportObject() 
         {
             // Return a string representation of the Service object containing every property
             return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PortNum},{Protocol},{HostId}";
