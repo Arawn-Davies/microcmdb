@@ -15,12 +15,19 @@ namespace microCMDB.CLI
 {
     public class Program
     {
+        /// <summary>
+        /// A boolean value to determine if the CLI is running.
+        /// </summary>
         public static bool running = false;
+        /// <summary>
+        /// The main entry point for the microCMDB CLI application.
+        /// </summary>
         private static void Main()
         {
             IO.path = Directory.GetCurrentDirectory();
             IO.Hosted = true;
             running = true;
+            Shell.Prep();
             while (running == true)
             {
                 Shell.CLI();

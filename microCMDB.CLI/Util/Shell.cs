@@ -8,27 +8,47 @@ namespace microCMDB.CLI.Util
 {
     public class Shell
     {
-        public static void CLI()
+        public static bool ucmdbOS = false;
+        private static bool seed = true;
+        public static string OScmd = "";
+
+        /// <summary>
+        /// Initialises the database and seeds it if required.
+        /// </summary>
+        /// <param name="init"></param>
+        private static void InitDB(bool init = true)
         {
             if (Db.CurrentDbContext == null)
             {
                 Db.CurrentDbContext = new Db();
-                IO.resp = IO.GetYesNo("No database loaded. Would you like to seed the database?");
-                if (IO.resp == true)
+                if (init == true)
                 {
                     Console.WriteLine("Creating a new database...");
                     Db.CurrentDbContext.SeedDatabase();
                 }
             }
+        }
 
+        /// <summary>
+        /// Prepares the CLI for use by checking if a database is loaded and seeding it if required.
+        /// </summary>
+        public static void Prep()
+        {
+            IO.resp = IO.GetYesNo("No database loaded. Would you like to seed the database?");
+            seed = IO.resp;
+        }
 
-            Console.WriteLine("Welcome to the microCMDB CLI");
-            Console.WriteLine("Type 'help' to see available commands.");
+        /// <summary>
+        /// The main CLI loop for the microCMDB application.
+        /// </summary>
+        public static void CLI()
+        {
+            // Initialise the database if it is not already loaded, and seed it if required
+            InitDB(seed);
 
             while (true)
             {
                 Console.Write("\n> ");
-
 
                 string? input = Console.ReadLine()?.ToLower();
 
@@ -205,7 +225,18 @@ namespace microCMDB.CLI.Util
                             Console.WriteLine("Exiting CMDB CLI. Goodbye!");
                             Program.running = false;
                             return;
-
+                        case "sys":
+                            if (ucmdbOS == false)
+                            {
+                                Console.WriteLine("System commands are only available in microCMDB.OS");
+                                break;
+                            }
+                            else
+                            {
+                                // Remove the 'sys' prefix and space from the system command and pass to the OS
+                                OScmd = input.Substring(4);
+                                return;
+                            }
                         default:
                             Console.WriteLine("Invalid command. Type 'help' for available commands.");
                             break;
