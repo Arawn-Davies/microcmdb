@@ -55,13 +55,14 @@ namespace microCMDB.CLI.Models
             return $"{DbTag},{Name},{Description},{CreatedDate},{ModifiedDate},{PurchaseDate},{DeployLoc}";
         }
 
-        public ConfigItem(string _dbTag, string _name, string _description, DateTime _dt, string _deployLoc)
+        public ConfigItem(string _dbTag, string _name, string _description, DateTime _dt, string _deployLoc) : base()
         {
             DbTag = _dbTag;
             Name = _name;
             Description = _description;
             PurchaseDate = _dt;
             DeployLoc = _deployLoc;
+            Db.CurrentDbContext.ConfigItems.Add(this);
         }
 
     }

@@ -60,9 +60,37 @@ namespace microCMDB.CLI.Util
 
         public static void NewNode()
         {
-            // Placeholder implementation to create a new Node
             Console.WriteLine("Creating a new Node...");
-            // Replace this with actual logic to create a new Node in the CMDB backend
+            Console.WriteLine("Enter ConfigItem ID");
+            // Parse the string as an integer, handling any exceptions
+            int _ciID = IO.GetInt();
+            Console.WriteLine("Enter the name:");
+            string? _name = Console.ReadLine();
+            Console.WriteLine("Enter the operating system version:");
+            string? _os = Console.ReadLine();
+            Console.WriteLine("Enter the CPU architechture:");
+            string? _cpu = Console.ReadLine();
+            Console.WriteLine("Enter the amount of RAM:");
+            double _ram = IO.GetDouble();
+            Console.WriteLine("Enter the amount of storage:");
+            double _storage = IO.GetDouble();
+            Console.WriteLine("Enter any notes:");
+            string? _notes = Console.ReadLine();
+            Console.WriteLine("Enter the deployment location:");
+            string? _deployLoc = Console.ReadLine();
+
+            Models.Node N = new Models.Node
+            {
+                ConfigItemID = _ciID,
+                Name = _name,
+                OS_Version = _os,
+                CPU_Arch = _cpu,
+                RAM = _ram,
+                Storage = _storage,
+                ModifiedDate = DateTime.Now,
+                Description = _notes,
+            };
+            
         }
 
         public static void NewHost()

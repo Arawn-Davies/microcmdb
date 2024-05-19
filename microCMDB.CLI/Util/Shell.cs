@@ -34,6 +34,15 @@ namespace microCMDB.CLI.Util
         /// </summary>
         public static void Prep()
         {
+            if (!Directory.Exists(IO.path + "\\cli.db"))
+            {
+                Db.CurrentDbContext = new Db();
+            }
+            else
+            {
+                Console.WriteLine("No database loaded. Would you like to seed the database?");
+                seed = IO.GetYesNo("No database loaded. Would you like to seed the database?");
+            }
             IO.resp = IO.GetYesNo("No database loaded. Would you like to seed the database?");
             seed = IO.resp;
         }

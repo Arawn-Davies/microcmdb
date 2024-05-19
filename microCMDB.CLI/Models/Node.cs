@@ -28,6 +28,16 @@ namespace microCMDB.CLI.Models
             Db.CurrentDbContext.Nodes.Add(this);
         }
 
+        public Node(string oS_Version, string cPU_Arch, double rAM, double storage, int configItemID) : base()
+        {
+            OS_Version = oS_Version;
+            CPU_Arch = cPU_Arch;
+            RAM = rAM;
+            Storage = storage;
+            ConfigItemID = configItemID;
+            Db.CurrentDbContext.Nodes.Add(this);
+        }
+
         public override string DbTagPrefix => "NOD";
 
         // A required field for the operating system version
