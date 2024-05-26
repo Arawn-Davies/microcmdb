@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using microCMDB.CLI.Models;
 
 namespace microCMDB.CLI
-{
+{       
     public class Db
     {
         public static Db? CurrentDbContext { get; set; }

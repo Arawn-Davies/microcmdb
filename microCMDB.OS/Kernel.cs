@@ -47,7 +47,8 @@ namespace microCMDB.lite
             {
                 try
                 {
-                    Shell.ucmdbOS = true;
+                    Shell.OSbnum = OS.BuildInfo.BuildNumber;
+                    Shell.cmdbOS = true;
                     Shell.CLI();
                     switch (Shell.OScmd)
                     {

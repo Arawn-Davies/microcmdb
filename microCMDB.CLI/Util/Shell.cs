@@ -8,8 +8,13 @@ namespace microCMDB.CLI.Util
 {
     public class Shell
     {
-        public static bool ucmdbOS = false;
+        // A boolean value to determine if microCMDB.OS is being used
+        public static bool cmdbOS = false;
+        // microCMDB.OS current build if applicable
+        public static string OSbnum = "";
+        // A boolean value to determine if the database should be seeded
         private static bool seed = true;
+        // The system command to be passed to the OS
         public static string OScmd = "";
 
         /// <summary>
@@ -18,15 +23,14 @@ namespace microCMDB.CLI.Util
         /// <param name="init"></param>
         private static void InitDB(bool init = true)
         {
-            if (Db.CurrentDbContext == null)
-            {
-                Db.CurrentDbContext = new Db();
-                if (init == true)
-                {
+            //if (Db.CurrentDbContext == null)
+            //{
+                //if (init == true)
+                //{
                     Console.WriteLine("Creating a new database...");
                     Db.CurrentDbContext.SeedDatabase();
-                }
-            }
+                //}
+            //}
         }
 
         /// <summary>
@@ -34,17 +38,24 @@ namespace microCMDB.CLI.Util
         /// </summary>
         public static void Prep()
         {
+            Db.CurrentDbContext = new Db();
+            seed = true;
+            // Initialise the database if it is not already loaded, and seed it if required
+            InitDB(seed);
+            /*
+            
+
             if (!Directory.Exists(IO.path + "\\cli.db"))
             {
-                Db.CurrentDbContext = new Db();
+                
             }
             else
             {
-                Console.WriteLine("No database loaded. Would you like to seed the database?");
                 seed = IO.GetYesNo("No database loaded. Would you like to seed the database?");
             }
             IO.resp = IO.GetYesNo("No database loaded. Would you like to seed the database?");
             seed = IO.resp;
+            */
         }
 
         /// <summary>
@@ -52,9 +63,6 @@ namespace microCMDB.CLI.Util
         /// </summary>
         public static void CLI()
         {
-            // Initialise the database if it is not already loaded, and seed it if required
-            InitDB(seed);
-
             while (true)
             {
                 Console.Write("\n> ");
@@ -210,7 +218,12 @@ namespace microCMDB.CLI.Util
                             IO.DeleteEntity(args);
                             break;
                         case "ver":
+                            Console.WriteLine("Copyright (C) 2024 Arawn Davies");
                             Console.WriteLine("microCMDB CLI Build: " + BuildInfo.BuildNumber);
+                            if (cmdbOS == true)
+                            {
+                                Console.WriteLine("microCMDB.OS Build: " + OSbnum);
+                            }
                             Console.WriteLine("Developed by Arawn Davies (2024) for Computer Science BSc Final Year Project");
                             break;
                         case "export":
@@ -235,7 +248,7 @@ namespace microCMDB.CLI.Util
                             Program.running = false;
                             return;
                         case "sys":
-                            if (ucmdbOS == false)
+                            if (cmdbOS == false)
                             {
                                 Console.WriteLine("System commands are only available in microCMDB.OS");
                                 break;

@@ -19,6 +19,16 @@ namespace microCMDB.CLI.Models
             Db.CurrentDbContext.NetworkUsers.Add(this);
         }
 
+        public NetworkUser(string username, string? email, string? firstname, string? lastname, string? password) : base()
+        {
+            Username = username;
+            Email = email;
+            Firstname = firstname;
+            Lastname = lastname;
+            Password = password;
+            Db.CurrentDbContext.NetworkUsers.Add(this);
+        }
+
         public override string DbTagPrefix => "USR";
 
         [Required]
@@ -33,6 +43,8 @@ namespace microCMDB.CLI.Models
 
         [Display(Name = "Last Name")]
         public string? Lastname { get; set; }
+
+        public string? Password { get; set; } = string.Empty;
 
         public ICollection<NetworkUserMapping> AllowedNodes { get; set; }
 

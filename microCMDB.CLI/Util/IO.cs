@@ -204,7 +204,21 @@ namespace microCMDB.CLI.Util
                 {
                     Console.WriteLine("Importing data from file: " + node);
                     string[] prop = node.Split(',');
-                    new Node(prop[0], prop[1], prop[2], prop[3], prop[4], prop[5], prop[6], prop[7], prop[8], prop[9], prop[10], prop[11], prop[12], prop[13], prop[14], prop[15], prop[16], prop[17], prop[18], prop[19], prop[20], prop[21], prop[22], prop[23], prop[24], prop[25], prop[26], prop[27], prop[28], prop[29], prop[30], prop[31], prop[32], prop[33], prop[34], prop[35], prop[36], prop[37], prop[38], prop[39], prop[40], prop[41], prop[42], prop[43], prop[44], prop[45], prop[46], prop[47], prop[48], prop[49], prop[50], prop[51], prop[52], prop[53], prop[54], prop[55], prop[56], prop[57], prop[58], prop[59], prop[60], prop[61], prop[62], prop[63], prop[64], prop[65], prop[66], prop[67], prop[68], prop[69], prop[70], prop[71], prop[72], prop[73], prop[74], prop[75], prop[76], prop[77], prop[78], prop[79], prop[80], prop[81], prop[82], prop[83], prop[84], prop[85], prop[86], prop[87], prop[88], prop[89], prop[90], prop[91], prop[92], prop[93], prop[94], prop[95], prop[96], prop[97], prop[98], prop[99]);
+                    // Create a new Node object with the properties from the CSV file, using the Node constructor from NewNode method in New.cs
+                    try
+                    {
+                        int prop2 = Int32.Parse(prop[2]);
+                        double prop3 = Int32.Parse(prop[3]);
+                        int prop4 = Int32.Parse(prop[4]);
+                        new Node(prop[0], prop[1], prop2, prop3, prop4);
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions
+                        Console.WriteLine("Error importing data from file: " + node);
+                        Console.WriteLine(ex.Message);
+                    }
+                    
                 }
 
 

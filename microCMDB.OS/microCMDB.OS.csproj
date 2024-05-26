@@ -1,34 +1,64 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <!--<RuntimeIdentifier>cosmos</RuntimeIdentifier>-->
-        <Platform>cosmos</Platform>
-        <SupportsX86Intrinsics>false</SupportsX86Intrinsics>
-        <SelfContained>True</SelfContained>
-    </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<!--<RuntimeIdentifier>cosmos</RuntimeIdentifier>-->
+		<Platform>cosmos</Platform>
+		<SupportsX86Intrinsics>false</SupportsX86Intrinsics>
+		<SelfContained>True</SelfContained>
+	</PropertyGroup>
 
-    <PropertyGroup>
-        <EnableGDB>False</EnableGDB>
-        <StartCosmosGDB>False</StartCosmosGDB>
-        <VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
-        <CosmosDebugPort>Serial: COM1</CosmosDebugPort>
-        <Launch>VMware</Launch>
-        <Profile>VMware</Profile>
-        <Description>Use VMware Player or Workstation to deploy and debug.</Description>
-        <PxeInterface>192.168.0.8</PxeInterface>
-    </PropertyGroup>
+	<PropertyGroup>
+		<EnableGDB>False</EnableGDB>
+		<StartCosmosGDB>False</StartCosmosGDB>
+		<VisualStudioDebugPort>Pipe: Cosmos\Serial</VisualStudioDebugPort>
+		<CosmosDebugPort>Serial: COM1</CosmosDebugPort>
+		<Launch>VMware</Launch>
+		<Profile>VMware</Profile>
+		<Description>Use VMware Player or Workstation to deploy and debug.</Description>
+		<PxeInterface>192.168.0.8</PxeInterface>
+	</PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
-        <PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
-        <PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
-        <PackageReference Include="Cosmos.Plugs" Version="0-*" NoWarn="NU1604" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Cosmos.Build" Version="0-*" NoWarn="NU1604" />
+		<PackageReference Include="Cosmos.Debug.Kernel" Version="0-*" NoWarn="NU1604" />
+		<PackageReference Include="Cosmos.System2" Version="0-*" NoWarn="NU1604" />
+		<PackageReference Include="Cosmos.Plugs" Version="0-*" NoWarn="NU1604" />
+	</ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\microCMDB.CLI\microCMDB.CLI.csproj" />
-      <ProjectReference Include="..\microcmdb.common\microCMDB.CLI.csproj" />
-    </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\microCMDB.CLI\microCMDB.CLI.csproj" />
+		<ProjectReference Include="..\microcmdb.common\microCMDB.CLI.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<FileWrites Include="BuildInfo.cs" />
+	</ItemGroup>
+
+	<Target Name="GetVersion" BeforeTargets="BeforeCompile;CoreCompile" Inputs="$(MSBuildAllProjects)" Outputs="Util\BuildInfo.cs">
+		<WriteLinesToFile File="BuildInfo.cs" Lines="$(GenVerCS)" Overwrite="true"></WriteLinesToFile>
+	</Target>
+
+	<PropertyGroup>
+		<Year>$([System.DateTime]::Now.ToString("yyyy"))</Year>
+		<Month>$([System.DateTime]::Now.ToString("MM"))</Month>
+		<Date>$([System.DateTime]::Now.ToString("dd"))</Date>
+		<Time>$([System.DateTime]::Now.ToString("HHmm"))</Time>
+		<GenVerCS>
+namespace microCMDB.OS
+{
+	///<summary>
+	///Class definition for microCMDB.common.Util
+	///</summary>
+	public class BuildInfo
+	{
+		///<summary>
+		///The kernel build number, generated upon a new build
+		///</summary>
+		public static string BuildNumber = "$(Date)$(Month)$(Year)$(Time)"%3b
+	}
+}
+	</GenVerCS>
+	</PropertyGroup>
 
 </Project>

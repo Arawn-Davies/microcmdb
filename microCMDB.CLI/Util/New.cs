@@ -33,7 +33,6 @@ namespace microCMDB.CLI.Util
             // Parse the string as a DateTime object
             DateTime _purchasedDT = IO.GetDate(Console.ReadLine());
 
-            Console.WriteLine("Enter when last updated:");
             DateTime _updatedDT = DateTime.Now;
             
             Console.WriteLine("Enter any notes:");
@@ -76,8 +75,6 @@ namespace microCMDB.CLI.Util
             double _storage = IO.GetDouble();
             Console.WriteLine("Enter any notes:");
             string? _notes = Console.ReadLine();
-            Console.WriteLine("Enter the deployment location:");
-            string? _deployLoc = Console.ReadLine();
 
             Models.Node N = new Models.Node
             {
@@ -95,29 +92,46 @@ namespace microCMDB.CLI.Util
 
         public static void NewHost()
         {
-            // Placeholder implementation to create a new Host
             Console.WriteLine("Creating a new Host...");
-            // Replace this with actual logic to create a new Host in the CMDB backend
+            
         }
 
         public static void NewUser()
         {
-            // Placeholder implementation to create a new User
-            Console.WriteLine("Creating a new User...");
-            // Replace this with actual logic to create a new User in the CMDB backend
+            Console.WriteLine("Creating a new User item...");
+            Console.WriteLine("Enter the name:");
+            string _name = Console.ReadLine();
+            Console.WriteLine("Enter the email address:");
+            string _email = Console.ReadLine();
+            Console.WriteLine("Enter the first name");
+            string _firstname = Console.ReadLine();
+            Console.WriteLine("Enter the last name");
+            string _lastname = Console.ReadLine();
+            Console.WriteLine("Enter the password");
+            string _password = Console.ReadLine();
+            
+             
+            Models.NetworkUser NU = new Models.NetworkUser
+            {
+                Name = _name,
+                Firstname = _firstname,
+                Lastname = _lastname,
+                Password = _password,
+                Email = _email
+            };
         }
 
         public static void NewService()
         {
             // Placeholder implementation to create a new Service
-            Console.WriteLine("Creating a new Service...");
+            Console.WriteLine("Creating a new Service item...");
             // Replace this with actual logic to create a new Service in the CMDB backend
         }
 
         public static void NewSoftware()
         {
             // Placeholder implementation to create a new Software
-            Console.WriteLine("Creating a new Software...");
+            Console.WriteLine("Creating a new Software item...");
             // Replace this with actual logic to create a new Software in the CMDB backend
         }
     }
