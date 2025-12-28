@@ -40,6 +40,12 @@ namespace microCMDB.CLI.Util
             Console.WriteLine("  get services\t\t- Retrieve Services from the CMDB");
             Console.WriteLine("  get software\t\t- Retrieve Software from the CMDB");
             Console.WriteLine("  get networkusers\t- Retrieve NetworkUsers from the CMDB");
+            // Get Developers
+            Console.WriteLine("  get developers\t- Retrieve Developers from the CMDB");
+            // Get Manufacturers
+            Console.WriteLine("  get manufacturers\t- Retrieve Manufacturers from the CMDB");
+            // Get Publishers
+            Console.WriteLine("  get publishers\t- Retrieve Publishers from the CMDB");
         }
 
         public static void Set()

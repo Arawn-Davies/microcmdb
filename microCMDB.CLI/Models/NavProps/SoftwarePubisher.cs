@@ -7,12 +7,12 @@ using System.Xml.Linq;
 
 namespace microCMDB.CLI.Models.NavProps
 {
-    public class SoftwarePublisher : Entity
+    public class SoftwarePublisherMapping : Entity
     {
         public override string DbTagPrefix => "SWP";
-        public SoftwarePublisher() : base()
+        public SoftwarePublisherMapping() : base()
         {
-            Db.CurrentDbContext.SoftwarePublishers.Add(this);
+            Db.CurrentDbContext.SoftwarePublisherMappings.Add(this);
         }
         public Publisher Publisher { get; set; }
         public Software Software { get; set; }
@@ -33,5 +33,4 @@ namespace microCMDB.CLI.Models.NavProps
         }
 
     }
-}
 }

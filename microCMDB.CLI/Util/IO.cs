@@ -207,10 +207,11 @@ namespace microCMDB.CLI.Util
                     // Create a new Node object with the properties from the CSV file, using the Node constructor from NewNode method in New.cs
                     try
                     {
-                        int prop2 = Int32.Parse(prop[2]);
+                        //int prop2 = Int32.Parse(prop[2]);
                         double prop3 = Int32.Parse(prop[3]);
-                        int prop4 = Int32.Parse(prop[4]);
-                        new Node(prop[0], prop[1], prop2, prop3, prop4);
+                        double prop4 = Int32.Parse(prop[4]);
+                        int prop5 = Int32.Parse(prop[5]);
+                        new Node(prop[0], prop[1], prop[2], prop3, prop4, prop5);
                     }
                     catch (Exception ex)
                     {

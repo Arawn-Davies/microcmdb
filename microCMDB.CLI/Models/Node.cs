@@ -8,6 +8,7 @@
 
 // Purpose: Model class to represent Nodes in the microCMDB backend.
 
+using microCMDB.CLI.Models.NavProps;
 using microCMDB.CLI.Util;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,13 +29,14 @@ namespace microCMDB.CLI.Models
             Db.CurrentDbContext.Nodes.Add(this);
         }
 
-        public Node(string oS_Version, string cPU_Arch, double rAM, double storage, int configItemID) : base()
+        public Node(string _modelName, string _OSver, string _arch, double _RAM, double _storage, int _configItemID) : base()
         {
-            OS_Version = oS_Version;
-            CPU_Arch = cPU_Arch;
-            RAM = rAM;
-            Storage = storage;
-            ConfigItemID = configItemID;
+            Modelname = _modelName;
+            OS_Version = _OSver;
+            CPU_Arch = _arch;
+            RAM = _RAM;
+            Storage = _storage;
+            ConfigItemID = _configItemID;
             Db.CurrentDbContext.Nodes.Add(this);
         }
 
@@ -74,10 +76,19 @@ namespace microCMDB.CLI.Models
         public ICollection<SoftwareInstallation> InstalledSoftware { get; set; } = new List<SoftwareInstallation>();
 
         public ICollection<NetworkUserMapping>? NetworkUsers { get; set; }
+        
+        public ICollection<HardwareManufacturerMapping>? Manufacturers { get; set; }
 
         public override void PrintInfo()
         {
             base.PrintInfo();
+            if (Manufacturers != null && Manufacturers.Count > 0)
+            {
+                foreach (var manufacturer in Manufacturers)
+                {
+                    Table.PrintRow("Manufacturer:", manufacturer.Manufacturer.Name);
+                }
+            }
             Table.PrintRow("OS Version:", OS_Version);
             Table.PrintRow("CPU Architecture:", CPU_Arch);
             if (RAM != null || RAM != 0) { Table.PrintRow("RAM", RAM.ToString()); } else { Table.PrintRow("RAM", "N/A"); }

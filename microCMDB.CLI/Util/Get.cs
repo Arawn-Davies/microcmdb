@@ -198,5 +198,74 @@ namespace microCMDB.CLI.Util
                 Table.PrintLine();
             }
         }
+
+        // Get all Publishers
+
+        public static void GetPublishers()
+        {
+            Table.PrintLine();
+            foreach (var publisher in Db.CurrentDbContext.Publishers)
+            {
+                publisher.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Get all Manufacturers
+        public static void GetManufacturers()
+        {
+            Table.PrintLine();
+            foreach (var manufacturer in Db.CurrentDbContext.Manufacturers)
+            {
+                manufacturer.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Get all Developers
+
+        public static void GetDevelopers()
+        {
+            Table.PrintLine();
+            foreach (var developer in Db.CurrentDbContext.Developers)
+            {
+                developer.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Get all SoftwareDeveloperMappings
+        public static void GetSoftwareDeveloperMappings()
+        {
+            Table.PrintLine();
+            foreach (var softwareDeveloperMapping in Db.CurrentDbContext.SoftwareDeveloperMappings)
+            {
+                softwareDeveloperMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Get all SoftwarePublisherMappings
+        public static void GetSoftwarePublisherMappings()
+        {
+            Table.PrintLine();
+            foreach (var softwarePublisherMapping in Db.CurrentDbContext.SoftwarePublisherMappings)
+            {
+                softwarePublisherMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
+        // Get all HardwareManufacturerMappings
+        public static void GetHardwareManufacturerMappings()
+        {
+            Table.PrintLine();
+            foreach (var hardwareManufacturerMapping in Db.CurrentDbContext.HardwareManufacturerMappings)
+            {
+                hardwareManufacturerMapping.PrintInfo();
+                Table.PrintLine();
+            }
+        }
+
     }
 }

@@ -45,11 +45,11 @@ namespace microCMDB.CLI
 
         public List<SoftwareInstallation> SoftwareInstallations { get; set;}
 
-        public List<SoftwarePublisher> SoftwarePublishers { get; set; }
+        public List<SoftwarePublisherMapping> SoftwarePublisherMappings { get; set; }
 
-        public List<SoftwareDeveloper> SoftwareDevelopers { get; set; }
+        public List<SoftwareDeveloperMapping> SoftwareDeveloperMappings { get; set; }
 
-        public List <HardwareManufacturer> HardwareManufacturers { get; set; }
+        public List <HardwareManufacturerMapping> HardwareManufacturerMappings { get; set; }
 
         public List<NetworkUserMapping> NetworkUserMappings { get; set; }
 
@@ -82,9 +82,9 @@ namespace microCMDB.CLI
             Manufacturers = new List<Manufacturer>();
             Developers = new List<Developer>();
 
-            SoftwarePublishers = new List<SoftwarePublisher>();
-            SoftwareDevelopers = new List<SoftwareDeveloper>();
-            HardwareManufacturers = new List<HardwareManufacturer>();
+            SoftwarePublisherMappings = new List<SoftwarePublisherMapping>();
+            SoftwareDeveloperMappings = new List<SoftwareDeveloperMapping>();
+            HardwareManufacturerMappings = new List<HardwareManufacturerMapping>();
 
             Console.WriteLine("Collections created.");
         }
@@ -108,10 +108,10 @@ namespace microCMDB.CLI
                 
 
                 // Create Nodes
-                var nA500 = new Node { Name = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20};
-                var nA6128 = new Node { Name = "Amstrad CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3 };
-                var nNAS1 = new Node { Name = "16TB Synology NAS", OS_Version = "DSM Linux 3.2.101", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000 };
-                var nNAS2 = new Node { Name = "16TB Ubuntu NAS", OS_Version = "Ubuntu Server 20.04", CPU_Arch = "Intel Core i7", RAM = 4, Storage = 16000 };
+                var nA500 = new Node { Name = "Amiga 500", Modelname = "Amiga 500", OS_Version = "AmigaOS", CPU_Arch = "Motorola 68000", RAM = 1, Storage = 20};
+                var nA6128 = new Node { Name = "Amstrad CPC 6128", Modelname = "CPC 6128", OS_Version = "Amstrad CP/M", CPU_Arch = "Zilog Z80", RAM = 0.5, Storage = 3 };
+                var nNAS1 = new Node { Name = "16TB Synology NAS", Modelname = "DS214+ play", OS_Version = "DSM Linux 3.2.101", CPU_Arch = "Intel Atom", RAM = 16, Storage = 16000 };
+                var nNAS2 = new Node { Name = "16TB Ubuntu NAS", Modelname = "Optiplex 3020", OS_Version = "Ubuntu Server 20.04", CPU_Arch = "Intel Core i7", RAM = 4, Storage = 16000 };
 
 
                 // Create Hosts                
@@ -175,6 +175,22 @@ namespace microCMDB.CLI
                 svcFTP.HostServiceMapping = HSM1;
                 svcHTTP.HostServiceMapping = HSM2;
                 svcSSH.HostServiceMapping = HSM3;
+
+                // Create initial Publishers
+                var publisherValve = new Publisher { Name = "Valve Corporation"  };
+                // Create initial Developers
+                var developerValve = new Developer { Name = "Valve Corporation"  };
+                // Create initial Manufacturers
+                var manufacturerDell = new Manufacturer { Name = "Dell Inc."  };
+
+                // Create initial Software-Publisher Mappings
+                var SPM1 = new SoftwarePublisherMapping { Software = steamLauncher, Publisher = publisherValve };
+                // Create initial Software-Developer Mappings
+                var SDM1 = new SoftwareDeveloperMapping { Software = steamLauncher, Developer = developerValve  };
+                // Create initial Hardware-Manufacturer Mappings
+                var HMM1 = new HardwareManufacturerMapping { Node = nNAS2, Manufacturer = manufacturerDell  };
+
+
 
             }
         }

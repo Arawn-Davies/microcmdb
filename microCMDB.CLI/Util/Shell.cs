@@ -135,6 +135,18 @@ namespace microCMDB.CLI.Util
                                 case "stw":
                                     Util.Get.GetSoftware();
                                     break;
+                                case "manufacturers":
+                                case "man":
+                                    Util.Get.GetManufacturers();
+                                    break;
+                                case "publishers":
+                                case "pub":
+                                    Util.Get.GetPublishers();
+                                    break;
+                                case "developers":
+                                case "devs":
+                                    Util.Get.GetDevelopers();
+                                    break;
                                 default:
                                     Console.WriteLine("Invalid 'get' command. Type 'help get' for available queries.");
                                     break;

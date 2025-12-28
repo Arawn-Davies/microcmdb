@@ -7,12 +7,12 @@ using System.Xml.Linq;
 
 namespace microCMDB.CLI.Models.NavProps
 {
-    public class HardwareManufacturer : Entity
+    public class HardwareManufacturerMapping : Entity
     {
-        public override string DbTagPrefix => "SDE";
-        public HardwareManufacturer() : base()
+        public override string DbTagPrefix => "HMP";
+        public HardwareManufacturerMapping() : base()
         {
-            Db.CurrentDbContext.HardwareManufacturers.Add(this);
+            Db.CurrentDbContext.HardwareManufacturerMappings.Add(this);
         }
         public Manufacturer Manufacturer { get; set; }
         public Node Node { get; set; }

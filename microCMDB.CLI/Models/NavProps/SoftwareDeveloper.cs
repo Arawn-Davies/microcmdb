@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace microCMDB.CLI.Models.NavProps
 {
-    public class SoftwareDeveloper : Entity
+    public class SoftwareDeveloperMapping : Entity
     {
         public override string DbTagPrefix => "SDE";
-        public SoftwareDeveloper() : base()
+        public SoftwareDeveloperMapping() : base()
         {
-            Db.CurrentDbContext.SoftwareDevelopers.Add(this);
+            Db.CurrentDbContext.SoftwareDeveloperMappings.Add(this);
         }
-        public Developer Dev { get; set; }
+        public Developer Developer { get; set; }
         public Software Software { get; set; }
         public int DeveloperID { get; set; }
         public int SoftwareID { get; set; }
@@ -21,7 +21,7 @@ namespace microCMDB.CLI.Models.NavProps
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine("Developer:\t" + Dev.Name);
+            Console.WriteLine("Developer:\t" + Developer.Name);
             Console.WriteLine("Software:\t" + Software.Name);
         }
 
