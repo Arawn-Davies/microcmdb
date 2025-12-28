@@ -40,6 +40,11 @@ namespace microCMDB.CLI.Models
 
         public override string DbTagPrefix => "NOD";
 
+        // A required field for the model of the node
+        [Required]
+        [Display(Name = "Modelname")]
+        public string Modelname { get; set; } = string.Empty;
+
         // A required field for the operating system version
         [Required]
         [Display(Name = "Operating System")]

@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using microCMDB.CLI.Models;
+using microCMDB.CLI.Models.NavProps;
 
 namespace microCMDB.CLI
 {       
@@ -44,23 +45,47 @@ namespace microCMDB.CLI
 
         public List<SoftwareInstallation> SoftwareInstallations { get; set;}
 
+        public List<SoftwarePublisher> SoftwarePublishers { get; set; }
+
+        public List<SoftwareDeveloper> SoftwareDevelopers { get; set; }
+
+        public List <HardwareManufacturer> HardwareManufacturers { get; set; }
+
         public List<NetworkUserMapping> NetworkUserMappings { get; set; }
+
+        public List<Publisher> Publishers { get; set; }
+
+        public List<Manufacturer> Manufacturers { get; set; }
+
+        public List<Developer> Developers { get; set; }
 
         public Db()
         {
             Console.WriteLine("Creating collections...");
+
             Entities = new List<Entity>();
             ConfigItems = new List<ConfigItem>();
+
             Nodes = new List<Node>();
             Hosts = new List<Host>();
             Services = new List<Service>();
             Software = new List<Software>();
             NetworkUsers = new List<NetworkUser>();
+
             CINodeMappings = new List<CINodeMapping>();
             NodeHostMappings = new List<NodeHostMapping>();
             HostServiceMappings = new List<HostServiceMapping>();
             SoftwareInstallations = new List<SoftwareInstallation>();
             NetworkUserMappings = new List<NetworkUserMapping>();
+
+            Publishers = new List<Publisher>();
+            Manufacturers = new List<Manufacturer>();
+            Developers = new List<Developer>();
+
+            SoftwarePublishers = new List<SoftwarePublisher>();
+            SoftwareDevelopers = new List<SoftwareDeveloper>();
+            HardwareManufacturers = new List<HardwareManufacturer>();
+
             Console.WriteLine("Collections created.");
         }
 

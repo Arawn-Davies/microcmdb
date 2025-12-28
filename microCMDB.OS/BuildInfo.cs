@@ -8,6 +8,6 @@ namespace microCMDB.OS
 		///<summary>
 		///The kernel build number, generated upon a new build
 		///</summary>
-		public static string BuildNumber = "260520241634";
+		public static string BuildNumber = "281220250034";
 	}
 }
