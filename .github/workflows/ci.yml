@@ -7,7 +7,16 @@ name: CI
 on:
   push:
     branches: [ main ]
+    # Skip the build when only docs/markdown change (no source affected).
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
   pull_request:
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
+      - 'LICENSE'
 
 jobs:
   build:

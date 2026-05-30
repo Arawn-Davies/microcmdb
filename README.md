@@ -1,4 +1,7 @@
 # microcmdb
+
+[![CI](https://github.com/Arawn-Davies/microcmdb/actions/workflows/ci.yml/badge.svg)](https://github.com/Arawn-Davies/microcmdb/actions/workflows/ci.yml)
+
 Small CMDB-style config manager for home network.  
 Useful for complex home networks with client devices and assets with varying device classes.  
 
