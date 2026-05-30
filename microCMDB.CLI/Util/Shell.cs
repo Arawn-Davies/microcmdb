@@ -74,8 +74,11 @@ namespace microCMDB.CLI.Util
 
                 if (input == null)
                 {
-                    Console.WriteLine("Invalid command. Type 'help' for available commands.");
-                    continue;
+                    // ReadLine() returns null at EOF (Ctrl-D or end of piped input).
+                    // Exit cleanly instead of looping forever on the null input.
+                    Console.WriteLine("\nEOF received. Exiting CMDB CLI. Goodbye!");
+                    Program.running = false;
+                    return;
                 }
 
                 string[] parts = input.Split(' ');
@@ -157,6 +160,13 @@ namespace microCMDB.CLI.Util
                             {
                                 case "configitems":
                                 case "c":
+                                    // Guard against a missing tag (e.g. "set c"); parts[2]
+                                    // would otherwise throw IndexOutOfRangeException and crash the CLI.
+                                    if (parts.Length < 3)
+                                    {
+                                        Console.WriteLine("Usage: set configitems <dbtag>");
+                                        break;
+                                    }
                                     Util.Set.SetConfigItems(parts[2]);
                                     break;
                                 case "nodes":
@@ -224,6 +234,13 @@ namespace microCMDB.CLI.Util
                             }
                             break;
                         case "find":
+                            // An empty tag makes StartsWith("") match everything and dumps the
+                            // whole database; require a tag instead.
+                            if (string.IsNullOrWhiteSpace(args))
+                            {
+                                Console.WriteLine("Usage: find <dbtag>");
+                                break;
+                            }
                             Get.PrintEntityInfo(args);
                             break;
                         case "delete":
