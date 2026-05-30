@@ -35,7 +35,7 @@ namespace microCMDB.CLI.Util
 		///<summary>
 		///The kernel build number, generated upon a new build
 		///</summary>
-		public static string BuildNumber = "$(Date)$(Month)$(Year)$(Time)"%3b
+		public static string BuildNumber = "$(Year)$(Month)$(Date)$(Time)"%3b
 	}
 }
 		</GenVerCS>
