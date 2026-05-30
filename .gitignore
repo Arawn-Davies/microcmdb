@@ -398,3 +398,9 @@ FodyWeavers.xsd
 *.sln.iml
 
 *.DS_Store
+
+# SQLite database files and write-ahead-log / shared-memory sidecars
+# (runtime artifacts; should never be committed)
+*.db
+*.db-shm
+*.db-wal
