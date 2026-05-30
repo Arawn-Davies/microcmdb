@@ -1,7 +1,9 @@
 # microcmdb
 Small CMDB-style config manager for home network.  
 Useful for complex home networks with client devices and assets with varying device classes.  
-  
+
+📖 **Documentation:** <https://arawn-davies.co.uk/microcmdb>
+
 ## microCMDB.CLI
   This project is a command line interface for microCMDB.
   It is a simple console application that allows the user to interact with the microCMDB shell in a minimalist environment.
