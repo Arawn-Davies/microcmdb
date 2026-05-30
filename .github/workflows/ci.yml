@@ -1,0 +1,42 @@
+name: CI
+
+# Replaces the previous AppVeyor pipeline: restore, build and publish the CLI
+# across Windows, Ubuntu and macOS on every push to main and on pull requests.
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    name: Build CLI (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          # The CLI targets net6.0 but builds fine on the .NET 8 SDK, which
+          # restores the net6 targeting pack on demand (mirrors local builds).
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore microCMDB.CLI/microCMDB.CLI.csproj
+
+      - name: Build
+        run: dotnet build microCMDB.CLI/microCMDB.CLI.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish microCMDB.CLI/microCMDB.CLI.csproj -c Release --no-build -o publish
+
+      - name: Upload published CLI
+        uses: actions/upload-artifact@v4
+        with:
+          name: microCMDB.CLI-${{ matrix.os }}
+          path: publish
