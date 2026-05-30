@@ -1,7 +1,9 @@
 name: CI
 
-# Replaces the previous AppVeyor pipeline: restore, build and publish the CLI
-# across Windows, Ubuntu and macOS on every push to main and on pull requests.
+# Replaces the previous AppVeyor pipeline: restore and build the CLI and Web
+# projects across Windows, Ubuntu and macOS on every push to main and on PRs.
+# (microCMDB.OS is excluded — it's a Cosmos-kernel project that won't build in
+# stock CI.)
 on:
   push:
     branches: [ main ]
@@ -9,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build CLI (${{ matrix.os }})
+    name: Build (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -22,21 +24,29 @@ jobs:
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
-          # The CLI targets net6.0 but builds fine on the .NET 8 SDK, which
-          # restores the net6 targeting pack on demand (mirrors local builds).
+          # The CLI targets net6.0 and Web targets net7.0; both build on the
+          # .NET 8 SDK, which restores the matching targeting packs on demand.
           dotnet-version: 8.0.x
 
-      - name: Restore
+      # --- microCMDB.CLI (net6.0) ---
+      - name: Restore CLI
         run: dotnet restore microCMDB.CLI/microCMDB.CLI.csproj
 
-      - name: Build
+      - name: Build CLI
         run: dotnet build microCMDB.CLI/microCMDB.CLI.csproj -c Release --no-restore
 
-      - name: Publish
-        run: dotnet publish microCMDB.CLI/microCMDB.CLI.csproj -c Release --no-build -o publish
+      - name: Publish CLI
+        run: dotnet publish microCMDB.CLI/microCMDB.CLI.csproj -c Release --no-build -o publish/cli
 
       - name: Upload published CLI
         uses: actions/upload-artifact@v4
         with:
           name: microCMDB.CLI-${{ matrix.os }}
-          path: publish
+          path: publish/cli
+
+      # --- microCMDB.Web (net7.0) ---
+      - name: Restore Web
+        run: dotnet restore microCMDB.Web/microCMDB.Web.csproj
+
+      - name: Build Web
+        run: dotnet build microCMDB.Web/microCMDB.Web.csproj -c Release --no-restore
