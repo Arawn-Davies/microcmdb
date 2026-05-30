@@ -32,15 +32,10 @@ namespace microCMDB.CLI.Util
         public static bool GetYesNo(string _prompt)
         {
             Console.WriteLine(_prompt + " (y/n)");
-            string response = Console.ReadLine();
-            if (response.ToLower() == "y")
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // ReadLine() returns null on EOF (e.g. Ctrl-D or end of piped input);
+            // treat that and anything other than "y" as a "no".
+            string? response = Console.ReadLine();
+            return response?.Trim().ToLower() == "y";
         }
 
         public static int GetInt()
@@ -264,10 +259,16 @@ namespace microCMDB.CLI.Util
                         date = new DateTime(year, month, day);
                         validDate = true;
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         Console.WriteLine("Invalid date. Use format DD/MM/YYYY - Please retry.");
-                        _dstr = Console.ReadLine();
+                        string? retry = Console.ReadLine();
+                        // Give up gracefully on EOF / blank input instead of looping forever.
+                        if (string.IsNullOrWhiteSpace(retry))
+                        {
+                            return DateTime.Now;
+                        }
+                        _dstr = retry;
                     }
                 }
             }

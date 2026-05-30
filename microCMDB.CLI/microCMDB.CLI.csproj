@@ -5,6 +5,9 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<!-- No .NET 6 runtime is installed locally; allow the net6.0-targeted app
+		     to roll forward onto a newer installed runtime (net8/net9). -->
+		<RollForward>Major</RollForward>
 	</PropertyGroup>
 
 	<ItemGroup>
