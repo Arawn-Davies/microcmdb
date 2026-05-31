@@ -25,6 +25,9 @@ aux_links_new_tab: true
 plugins:
   - jekyll-remote-theme
 
+footer_content: >-
+  <a href="https://arawn-davies.co.uk">Home: arawn-davies.co.uk</a>
+
 # Keep the binary dissertation deliverables out of the rendered nav/search but
 # still copy them through so they remain downloadable from the published site.
 include:
